@@ -14,7 +14,7 @@ Future<void> main() async {
     path: Constants.langAssetPath,
     supportedLocales: Constants.supportedLocales,
     assetLoader: const CodegenLoader(),
-    fallbackLocale: Locale('en', 'US'),
+    fallbackLocale: Locale('fr', 'FR'),
     child: App(),
   ));
 }

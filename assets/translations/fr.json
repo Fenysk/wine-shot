@@ -1,0 +1,76 @@
+{
+  "loginPage": {
+    "signIn": "Se Connecter",
+    "password": "Mot de Passe",
+    "dontHaveAccount": "Vous n'avez pas de compte ?",
+    "signUp": "S'inscrire",
+    "emailAddress": "Adresse Email",
+    "passwordMinLengthErrorMessage": "Le mot de passe doit être au moins de 8 caractères",
+    "passwordSpecialCharacterErrorMessage": "Les mots de passe doivent contenir au moins un caractère spécial"
+  },
+  "registerPage": {
+    "signUp": "S'inscrire",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phoneNumber": "Numéro de Téléphone",
+    "emailAddress": "Adresse Email",
+    "password": "Mot de Passe",
+    "confirm": "Confirmer",
+    "showPassword": "Montrer le Mot de Passe",
+    "iAgreeToTermCondition": "J'accepte les Termes et Conditions",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "signIn": "Se Connecter",
+    "passwordDoNotMatch": "Les mots de passe ne correspondent pas",
+    "validPhoneNumberErrorMessage": "Veuillez entrer un numéro de téléphone valide",
+    "phoneNumberHint": "Entrez votre numéro de téléphone (par exemple, +1 123-456-7890)"
+  },
+  "homePage": {
+    "title": "Accueil",
+    "hello": "Bonjour"
+  },
+  "settingsPage": {
+    "title": "Paramètres",
+    "darkMode": "Mode Sombre",
+    "lightMode": "Mode Clair",
+    "language": "Langue"
+  },
+  "layoutPage": {
+    "home": "Accueil",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "logout": "Se Déconnecter",
+    "changeLanguage": "Changer de Langue",
+    "changeTheme": "Changer de Thème"
+  },
+  "profilePage": {
+    "title": "Profil"
+  },
+  "landingPage": {
+    "welcomeTo": "Bienvenue sur",
+    "cleanStarter": "Clean Starter",
+    "paragraph1": "Ce projet de template Flutter est basé sur les principes de l'Architecture Clean et de l'Architecture Modulaire. Il fournit une fondation solide, scalable et conçue pour aider à démarrer les applications Flutter qui sont bien structurées, faciles à maintenir et prêtes à croître.",
+    "paragraph2": "Ce projet est idéal pour les développeurs qui veulent démarrer leurs applications Flutter avec une architecture clean et scalable. C'est facile à étendre, à maintenir et à adapter aux applications prêtes pour la production. Bonne chance dans votre construction ! 🚀",
+    "featuresTitle": "📦 Fonctionnalités Incluses",
+    "structureTitle": "📁 Structure du Projet",
+    "structureLine1": "- _core: Fonctions, bibliothèques et configurations\n- _shared: Pages, widgets et utilitaires partagés\n- modules: Structure basée sur les fonctionnalités\n  • auth:\n    ├── data (Couche de données)\n    ├── domain (Couche de domaine)\n    └── features (Couche d'interface utilisateur)\n  • user: Placeholder pour les fonctionnalités utilisateur\n  • todo: Réservé pour le développement futur",
+    "structureDetails": "- _core: Fonctions, bibliothèques et configurations\n- _shared: Pages, widgets et utilitaires partagés\n- modules: Structure basée sur les fonctionnalités\n  • auth:\n    ├── data (Couche de données)\n    ├── domain (Couche de domaine)\n    └── features (Couche d'interface utilisateur)\n  • user: Placeholder pour les fonctionnalités utilisateur\n  • todo: Réservé pour le développement futur",
+    "gettingStartedTitle": "🚀 Pour Commencer",
+    "gettingStartedDetails": "1. Clonez le repo depuis GitHub\n2. Exécutez `flutter pub get`\n3. Lancez en utilisant `flutter run`\n4. Commencez à construire vos fonctionnalités !",
+    "techStackTitle": "🛠️ Stack Technique",
+    "techStackDetails": "🧭 GoRouter pour le routage moderne\n📦 BLoC pour la gestion d'état\n📁 Hive pour le cache et le stockage locaux\n🌐 Dio pour le réseau\n🧩 GetIt pour l'injection de dépendances",
+    "featuresDetails": "✅ Flux de Connexion et d'Inscription\n✅ Pages Accueil, Profil et Paramètres\n✅ Support du Thème Sombre et Clair\n✅ Localisation: Anglais, Espagnol, Chinois, Arabe\n✅ Conception Réactive pour le Web et le Mobile",
+    "viewOnGithub": "Voir sur GitHub",
+    "paragraph3": "Nous accueillons toutes les contributions !\nFork le repo, faites des changements et soumettez une demande de pull.",
+    "contributionsWelcome": "🤝 Contributions Bienvenues"
+  },
+  "postPage": {
+    "title1": "Posts",
+    "title2": "Mes Posts",
+    "edit": "Éditer",
+    "delete": "Supprimer",
+    "publish": "Publier",
+    "postDetails": "Détails du Post",
+    "editPost": "Éditer le Post",
+    "createPost": "Créer un Post"
+  }
+}

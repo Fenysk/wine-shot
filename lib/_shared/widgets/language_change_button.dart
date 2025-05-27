@@ -41,6 +41,10 @@ class LanguageChangeButton extends StatelessWidget {
               value: Locale('es'),
               child: Text('Español 🇪🇸'),
             ),
+            PopupMenuItem(
+              value: Locale('fr'),
+              child: Text('Français 🇫🇷'),
+            ),
           ],
         );
 

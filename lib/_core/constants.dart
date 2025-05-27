@@ -26,6 +26,7 @@ class Constants {
     Locale('ar'),
     Locale('zh'),
     Locale('es'),
+    Locale('fr'),
   ];
 
   static const String mainRouesDiKey = "MainRoutes";

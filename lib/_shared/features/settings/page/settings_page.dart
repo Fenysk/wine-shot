@@ -53,9 +53,7 @@ class ThemeModeSettingButton extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         title: Text(
-          isDark
-              ? context.tr('settingsPage.lightMode')
-              : context.tr('settingsPage.darkMode'),
+          isDark ? context.tr('settingsPage.lightMode') : context.tr('settingsPage.darkMode'),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         trailing: Switch(
@@ -96,6 +94,7 @@ class LanguageSettingTile extends StatelessWidget {
           DropdownMenuItem(value: Locale('ar'), child: Text('العربية 🇸🇦')),
           DropdownMenuItem(value: Locale('zh'), child: Text('中文 🇨🇳')),
           DropdownMenuItem(value: Locale('es'), child: Text('Español 🇪🇸')),
+          DropdownMenuItem(value: Locale('fr'), child: Text('Français 🇫🇷')),
         ],
       ),
     );
