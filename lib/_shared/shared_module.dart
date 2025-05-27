@@ -18,7 +18,7 @@ Future<void> registerSharedModule() async {
   di.registerSingleton<NavigationService>(NavigationService());
 
   //* register routes and navigation tabs
-  di<List<RouteBase>>(instanceName: Constants.mainRouesDiKey).addAll(sharedRoutes());
+  di<List<RouteBase>>(instanceName: Constants.mainRoutesDiKey).addAll(sharedRoutes());
 }
 
 void registerSharedModuleWithContext(BuildContext context) {

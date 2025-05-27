@@ -19,20 +19,18 @@ Future<void> registerAuthModule() async {
   di<HiveInterface>().registerAdapter<UserModel>(UserModelAdapter());
 
   //* inject repositories
-  di.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(dio: di(), hive: di(), networkInfo: di()));
+  di.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(dio: di(), hive: di(), networkInfo: di()));
 
   //* Inject Usecases
   di.registerLazySingleton<AuthUsecases>(() => AuthUsecases(di()));
 
   //* inject blocs
-  di.registerLazySingleton(
-      () => AuthBloc(userUsecase: di())..add(AuthStatusSubscriptionRequested()));
+  di.registerLazySingleton(() => AuthBloc(userUsecase: di())..add(AuthStatusSubscriptionRequested()));
   di.registerFactory(() => LoginBloc(authRepository: di()));
   di.registerFactory(() => RegisterBloc(authRepository: di()));
 
   //* register routes and nav tabs
-  di<List<RouteBase>>(instanceName: Constants.mainRouesDiKey).addAll(authRoutes());
+  di<List<RouteBase>>(instanceName: Constants.mainRoutesDiKey).addAll(authRoutes());
 }
 
 void registerAuthModuleWithContext(BuildContext context) {

@@ -13,9 +13,8 @@ import 'app_router.dart';
 class Bootstrap {
   static Future<void> init() async {
     //* Initiate Core
-    di.registerSingleton<List<RouteBase>>([], instanceName: Constants.mainRouesDiKey);
-    di.registerSingleton<List<AdaptiveDestination>>([],
-        instanceName: Constants.navTabsDiKey);
+    di.registerSingleton<List<RouteBase>>([], instanceName: Constants.mainRoutesDiKey);
+    di.registerSingleton<List<AdaptiveDestination>>([], instanceName: Constants.navTabsDiKey);
 
     await HttpClient.init();
     await Database.init();
@@ -28,7 +27,6 @@ class Bootstrap {
     AppModules.initBeforeRunApp();
 
     //* initialize all routes
-    di.registerLazySingleton(
-        () => AppRouter(routes: di.get(instanceName: Constants.mainRouesDiKey)));
+    di.registerLazySingleton(() => AppRouter(routes: di.get(instanceName: Constants.mainRoutesDiKey)));
   }
 }

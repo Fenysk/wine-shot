@@ -29,6 +29,6 @@ class Constants {
     Locale('fr'),
   ];
 
-  static const String mainRouesDiKey = "MainRoutes";
+  static const String mainRoutesDiKey = "MainRoutes";
   static const String navTabsDiKey = "NavTabs";
 }
