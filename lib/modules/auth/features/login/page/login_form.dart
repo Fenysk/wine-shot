@@ -22,9 +22,7 @@ class _LoginFormState extends State<LoginForm> {
   bool isPasswordVisible = false;
 
   void changePasswordVisibility() {
-    setState(() {
-      isPasswordVisible = !isPasswordVisible;
-    });
+    setState(() => isPasswordVisible = !isPasswordVisible);
   }
 
   @override
@@ -38,6 +36,7 @@ class _LoginFormState extends State<LoginForm> {
             description: state.error,
           );
         }
+
         if (state is LoginSuccess) {
           context.go(firstNavRoute());
         }
@@ -49,8 +48,7 @@ class _LoginFormState extends State<LoginForm> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: !isMobile ? Theme.of(context).cardColor : null,
-            border:
-                !isMobile ? Border.all(width: 0.7, color: const Color(0xffdadce0)) : null,
+            border: !isMobile ? Border.all(width: 0.7, color: const Color(0xffdadce0)) : null,
           ),
           child: FormBuilder(
               key: _formKey,
@@ -64,10 +62,7 @@ class _LoginFormState extends State<LoginForm> {
                     child: Text(
                       context.tr("loginPage.signIn"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(height: 40),

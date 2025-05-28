@@ -1,3 +1,5 @@
+import 'package:clean_starter/_core/supabase.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 
 import '_init_modules.dart';
@@ -16,8 +18,11 @@ class Bootstrap {
     di.registerSingleton<List<RouteBase>>([], instanceName: Constants.mainRoutesDiKey);
     di.registerSingleton<List<AdaptiveDestination>>([], instanceName: Constants.navTabsDiKey);
 
+    await dotenv.load(fileName: ".env");
+
     await HttpClient.init();
     await Database.init();
+    await SupabaseConfig.init();
     await InitialAppData.load();
 
     //* Register Network

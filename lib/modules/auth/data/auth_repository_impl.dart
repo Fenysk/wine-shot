@@ -66,7 +66,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       String path = '/users/login';
-      final tokenRes = await dio.post(path, data: {"email": email, "password": password});
+      final tokenRes = await dio.post(path, data: {
+        "email": email,
+        "password": password
+      });
       String? token = tokenRes.data?['data']['token'];
       if (token == null) {
         return Left(ServerFailure("Error occurred while authenticating user!"));
