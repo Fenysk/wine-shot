@@ -12,6 +12,7 @@ class LastName extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'lastName',
+      initialValue: 'Fenysk',
       validator: FormBuilderValidators.required(),
       decoration: InputDecoration(
         isDense: true,

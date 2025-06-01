@@ -12,6 +12,7 @@ class PhoneField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'phone',
+      initialValue: '+33666666666',
       keyboardType: TextInputType.phone,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),

@@ -17,6 +17,7 @@ class ConfirmPasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'confirmPassword',
+      initialValue: 'Password1@',
       obscureText: !isPasswordVisible,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),

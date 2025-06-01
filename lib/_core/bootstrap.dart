@@ -21,7 +21,7 @@ class Bootstrap {
     await dotenv.load(fileName: ".env");
 
     await HttpClient.init();
-    await Database.init();
+    await LocalDatabase.init();
     await SupabaseConfig.init();
     await InitialAppData.load();
 

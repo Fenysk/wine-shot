@@ -4,14 +4,17 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show AuthApiException;
 
 import '../../../_core/constants.dart';
+import '../../../_core/di.dart';
 import '../../../_core/error/exceptions.dart';
 import '../../../_core/error/failures.dart';
 import '../../../_core/network_info.dart';
 import '../domain/auth_repository.dart';
 import '../domain/user.dart';
 import 'models/user_model.dart';
+import 'services/auth_supabase_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final _userController = BehaviorSubject<User>();
@@ -65,30 +68,53 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      String path = '/users/login';
-      final tokenRes = await dio.post(path, data: {
-        "email": email,
-        "password": password
-      });
-      String? token = tokenRes.data?['data']['token'];
-      if (token == null) {
-        return Left(ServerFailure("Error occurred while authenticating user!"));
+      // String path = '/users/login';
+      // final tokenRes = await dio.post(path, data: {
+      //   "email": email,
+      //   "password": password
+      // });
+      final authResponse = await di<AuthSupabaseService>().signInWithEmailAndPassword(email, password);
+      if (authResponse == null || authResponse.user == null || authResponse.session == null) {
+        return Left(ServerFailure('Invalid email or password'));
       }
+
+      // String? token = tokenRes.data?['data']['token'];
+      String token = authResponse.session!.accessToken;
       await _cacheToken(token);
 
-      final user = await _getUser();
+      // final user = await _getUser();
+      // await _cacheUser(user);
+      UserModel user = UserModel(
+        authResponse.user!.id,
+        authResponse.user!.userMetadata?['first_name'] ?? '',
+        authResponse.user!.userMetadata?['last_name'] ?? '',
+        authResponse.user!.phone ?? '',
+        authResponse.user!.email ?? '',
+        authResponse.user!.emailConfirmedAt != null,
+        [
+          if (authResponse.user!.role != null) authResponse.user!.role!
+        ],
+      );
       await _cacheUser(user);
 
       _userController.add(user);
+
       return Right(null);
     } catch (error) {
-      if (error is DioException) {
-        final message = DioExceptions.fromDioError(error).toString();
-        return Left(ServerFailure(message));
-      } else if (error is CacheException) {
-        return Left(CacheFailure("Oops, Something went wrong while caching user data!"));
+      switch (error) {
+        case AuthApiException e: // Supabase Exception
+          print("Supabase Exception: ${e.toString()}");
+          return Left(ServerFailure(e.toString()));
+
+        case DioException e:
+          final message = DioExceptions.fromDioError(e).toString();
+          print("DioException: $message");
+          return Left(ServerFailure(message));
+
+        default:
+          print("Unknown error during registration: ${error.toString()}");
+          return Left(ServerFailure());
       }
-      return Left(ServerFailure());
     }
   }
 
@@ -102,22 +128,39 @@ class AuthRepositoryImpl implements AuthRepository {
     required bool iAgree,
   }) async {
     try {
-      String path = '/users';
-      await dio.post(path, data: {
-        'firstName': firstName,
-        'lastName': lastName,
-        'phone': phone,
-        'email': email,
-        'password': password,
-        'isTermAndConditionAgreed': iAgree,
-      });
+      // String path = '/users';
+      // await dio.post(path, data: {
+      //   'firstName': firstName,
+      //   'lastName': lastName,
+      //   'phone': phone,
+      //   'email': email,
+      //   'password': password,
+      //   'isTermAndConditionAgreed': iAgree,
+      // });
+      final authResponse = await di<AuthSupabaseService>().signUpWithEmailAndPassword(email, password);
+      if (authResponse == null || authResponse.user == null) {
+        return Left(ServerFailure('Registration failed.'));
+      }
+
+      // Neither the token nor the user is cached because there is no session provided by Supabase.
+      // Once the user is created, they are redirected to the login page.
+
       return Right(null);
     } catch (error) {
-      if (error is DioException) {
-        final message = DioExceptions.fromDioError(error).toString();
-        return Left(ServerFailure(message));
+      switch (error) {
+        case AuthApiException e: // Supabase Exception
+          print("Supabase Exception: ${e.toString()}");
+          return Left(ServerFailure(e.toString()));
+
+        case DioException e:
+          final message = DioExceptions.fromDioError(e).toString();
+          print("DioException: $message");
+          return Left(ServerFailure(message));
+
+        default:
+          print("Unknown error during registration: ${error.toString()}");
+          return Left(ServerFailure());
       }
-      return Left(ServerFailure());
     }
   }
 

@@ -17,11 +17,11 @@ class PasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'password',
+      initialValue: 'Password1@',
       obscureText: !isPasswordVisible,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
-        FormBuilderValidators.minLength(8,
-            errorText: context.tr('loginPage.passwordMinLengthErrorMessage')),
+        FormBuilderValidators.minLength(8, errorText: context.tr('loginPage.passwordMinLengthErrorMessage')),
         (value) {
           String pattern = r'(?=.*?[#?!@$%^&*-])';
           RegExp regExp = RegExp(pattern);

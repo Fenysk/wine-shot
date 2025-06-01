@@ -1,3 +1,4 @@
+import 'package:clean_starter/modules/auth/data/services/auth_supabase_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
@@ -20,6 +21,9 @@ Future<void> registerAuthModule() async {
 
   //* inject repositories
   di.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(dio: di(), hive: di(), networkInfo: di()));
+
+  //* inject services
+  di.registerLazySingleton<AuthSupabaseService>(() => AuthSupabaseServiceImpl());
 
   //* Inject Usecases
   di.registerLazySingleton<AuthUsecases>(() => AuthUsecases(di()));

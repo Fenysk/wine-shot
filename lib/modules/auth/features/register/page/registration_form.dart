@@ -60,19 +60,14 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     child: Text(
                       context.tr('registerPage.signUp'),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(height: 30),
                   ResponsiveRowColumn(
                     columnSpacing: 24,
                     rowSpacing: 8,
-                    layout: isMobile
-                        ? ResponsiveRowColumnType.COLUMN
-                        : ResponsiveRowColumnType.ROW,
+                    layout: isMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
                     children: const [
                       ResponsiveRowColumnItem(
                         rowFlex: 1,
@@ -92,9 +87,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   ResponsiveRowColumn(
                     columnSpacing: 24,
                     rowSpacing: 8,
-                    layout: isMobile
-                        ? ResponsiveRowColumnType.COLUMN
-                        : ResponsiveRowColumnType.ROW,
+                    layout: isMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
                     children: [
                       ResponsiveRowColumnItem(
                         rowFlex: 1,
@@ -131,6 +124,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   const SizedBox(height: 24),
                   FormBuilderCheckbox(
                     name: 'iAgree',
+                    initialValue: true,
                     decoration: const InputDecoration(
                       isDense: true,
                       contentPadding: EdgeInsets.all(0),
