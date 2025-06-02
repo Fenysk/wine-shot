@@ -3,21 +3,44 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class ProfileSupabaseService {
   Future<User?> getCurrentUser();
-  Future<User?> updateFirstName(String firstName);
+  Future<User?> updateProfile(
+    String firstName,
+    String lastName,
+    String email,
+    String phone,
+  );
 }
 
 class ProfileSupabaseServiceImpl implements ProfileSupabaseService {
   @override
-  Future<User?> updateFirstName(String firstName) async {
-    final result = await SupabaseConfig.client.auth.updateUser(
-      UserAttributes(
-        data: {
-          'first_name': firstName,
-        },
-      ),
-    );
+  Future<User?> updateProfile(
+    String firstName,
+    String lastName,
+    String email,
+    String phone,
+  ) async {
+    try {
+      final result = await SupabaseConfig.client.auth.updateUser(
+        UserAttributes(
+          email: email,
+          phone: phone,
+          data: {
+            'first_name': firstName,
+            'last_name': lastName,
+          },
+        ),
+      );
 
-    return result.user;
+      return result.user;
+    } catch (error) {
+      if (error is AuthException) {
+        print("Supabase Auth Exception: ${error.toString()}");
+        rethrow;
+      }
+
+      print("Unknown error during profile update: ${error.toString()}");
+      rethrow;
+    }
   }
 
   @override

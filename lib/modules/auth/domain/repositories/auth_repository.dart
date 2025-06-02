@@ -4,13 +4,13 @@ import '../../../../_core/error/failures.dart';
 import '../user.dart';
 
 abstract class AuthRepository {
-  Stream<User> getUserStream();
+  Stream<User> getCurrentUserStream();
   void dispose();
 
   Future<Either<Failure, void>> isAuthenticated();
   Future<Either<Failure, void>> logout();
   Future<Either<Failure, void>> login({required String email, required String password});
-  Future<Either<Failure, User?>> getUser();
+  Future<Either<Failure, User?>> getCurrentUser();
   void updateCachedUser(User user);
 
   Future<Either<Failure, void>> register({
@@ -22,5 +22,10 @@ abstract class AuthRepository {
     required bool iAgree,
   });
 
-  Future<Either<Failure, void>> updateFirstName(String firstName);
+  Future<Either<Failure, void>> updateProfile(
+    String firstName,
+    String lastName,
+    String email,
+    String phone,
+  );
 }

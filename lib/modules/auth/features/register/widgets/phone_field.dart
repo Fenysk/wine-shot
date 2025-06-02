@@ -4,22 +4,25 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class PhoneField extends StatelessWidget {
+  final String? initialValue;
+
   const PhoneField({
     super.key,
+    this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'phone',
-      initialValue: '+33666666666',
+      initialValue: initialValue,
       keyboardType: TextInputType.phone,
       validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
         (value) {
+          if (value == null || value.isEmpty) return null;
           String pattern = r'^\+?\d{1,4}?[-.\s]?\(?\d{1,4}?\)?[-.\s]?\d{3,15}$';
           RegExp regExp = RegExp(pattern);
-          if (!regExp.hasMatch(value!)) {
+          if (!regExp.hasMatch(value)) {
             return context.tr('registerPage.validPhoneNumberErrorMessage');
           }
           return null;

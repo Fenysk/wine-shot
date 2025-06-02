@@ -4,15 +4,18 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class LastName extends StatelessWidget {
+  final String? initialValue;
+
   const LastName({
     super.key,
+    this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'lastName',
-      initialValue: 'Fenysk',
+      initialValue: initialValue,
       validator: FormBuilderValidators.required(),
       decoration: InputDecoration(
         isDense: true,

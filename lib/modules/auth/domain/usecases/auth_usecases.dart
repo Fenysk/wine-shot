@@ -15,14 +15,19 @@ class AuthUsecases {
   }
 
   Stream<User> getUserStream() {
-    return _authRepository.getUserStream();
+    return _authRepository.getCurrentUserStream();
   }
 
   Future<Either<Failure, void>> logout() {
     return _authRepository.logout();
   }
 
-  Future<Either<Failure, void>> updateFirstName(String firstName) {
-    return _authRepository.updateFirstName(firstName);
+  Future<Either<Failure, void>> updateProfile(
+    String firstName,
+    String lastName,
+    String email,
+    String phone,
+  ) {
+    return _authRepository.updateProfile(firstName, lastName, email, phone);
   }
 }

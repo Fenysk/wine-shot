@@ -12,16 +12,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc({required AuthUsecases authUsecase})
       : _authUsecase = authUsecase,
         super(ProfileInitial()) {
-    on<UpdateFirstName>(_updateFirstName);
+    on<UpdateProfile>(_updateProfile);
   }
 
-  Future<void> _updateFirstName(UpdateFirstName event, Emitter<ProfileState> emit) async {
+  Future<void> _updateProfile(UpdateProfile event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
 
-    var result = await _authUsecase.updateFirstName(event.firstName);
+    var result = await _authUsecase.updateProfile(event.firstName, event.lastName, event.email, event.phone);
 
     result.fold(
-      (errorMessage) => emit(ProfileFailure(message: errorMessage.toString())),
+      (errorMessage) => emit(ProfileFailure(errorMessage: errorMessage.toString())),
       (_) => emit(ProfileUpdated()),
     );
   }

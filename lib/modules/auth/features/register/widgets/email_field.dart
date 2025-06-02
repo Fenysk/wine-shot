@@ -4,14 +4,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class EmailField extends StatelessWidget {
+  final String? initialValue;
+
   const EmailField({
     super.key,
+    this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      initialValue: 'test@test.com',
+      initialValue: initialValue,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
         FormBuilderValidators.email(),

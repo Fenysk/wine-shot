@@ -18,7 +18,7 @@ import '../services/auth_supabase_service.dart';
 import '../services/profile_supabase_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final _userController = BehaviorSubject<User>();
+  final _currentUserController = BehaviorSubject<User>();
 
   final Dio dio;
   final HiveInterface hive;
@@ -31,13 +31,13 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Stream<User> getUserStream() => _userController.asBroadcastStream();
+  Stream<User> getCurrentUserStream() => _currentUserController.asBroadcastStream();
 
   @override
   Future<Either<Failure, void>> logout() async {
     try {
       await clearCache();
-      _userController.add(User.empty);
+      _currentUserController.add(User.empty);
       return Right(null);
     } catch (e) {
       return Left(CacheFailure("Oops, Something went wrong while clearing cached data!"));
@@ -45,20 +45,20 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  void dispose() => _userController.close();
+  void dispose() => _currentUserController.close();
 
   @override
   Future<Either<Failure, void>> isAuthenticated() async {
     try {
-      if (_userController.hasValue) {
+      if (_currentUserController.hasValue) {
         return Right(null);
       } else {
         final user = await _getCachedUser();
-        _userController.add(user);
+        _currentUserController.add(user);
       }
       return Right(null);
     } catch (error) {
-      _userController.add(User.empty);
+      _currentUserController.add(User.empty);
       return Left(CacheFailure('Error occurred while loading cached data!'));
     }
   }
@@ -88,7 +88,7 @@ class AuthRepositoryImpl implements AuthRepository {
       UserModel user = _userModelFromSupabaseUser(authResponse.user!);
       await _cacheUser(user);
 
-      _userController.add(user);
+      _currentUserController.add(user);
 
       return Right(null);
     } catch (error) {
@@ -156,10 +156,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User?>> getUser() async {
+  Future<Either<Failure, User?>> getCurrentUser() async {
     try {
       var user = await _getUserModel();
-      _userController.add(user);
+      _currentUserController.add(user);
       return Right(user);
     } catch (error) {
       if (error is DioException) {
@@ -178,19 +178,24 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateFirstName(String firstName) async {
+  Future<Either<Failure, void>> updateProfile(
+    String firstName,
+    String lastName,
+    String email,
+    String phone,
+  ) async {
     try {
-      final editUserFirstNameResponse = await di<ProfileSupabaseService>().updateFirstName(firstName);
+      final editUserFirstNameResponse = await di<ProfileSupabaseService>().updateProfile(firstName, lastName, email, phone);
 
       UserModel user = _userModelFromSupabaseUser(editUserFirstNameResponse!);
 
-      _userController.add(user);
+      _currentUserController.add(user);
 
       await _cacheUser(user);
 
       return Right(null);
-    } catch (e) {
-      return Left(ServerFailure('Failed to update first name'));
+    } catch (errorMessage) {
+      return Left(ServerFailure(errorMessage.toString()));
     }
   }
 

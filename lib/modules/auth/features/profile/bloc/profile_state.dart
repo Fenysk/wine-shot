@@ -14,12 +14,12 @@ final class ProfileLoading extends ProfileState {}
 final class ProfileUpdated extends ProfileState {}
 
 final class ProfileFailure extends ProfileState {
-  final String message;
+  final String errorMessage;
 
-  const ProfileFailure({required this.message});
+  const ProfileFailure({required this.errorMessage});
 
   @override
   List<Object> get props => [
-        message
+        errorMessage
       ];
 }
