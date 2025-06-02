@@ -2,31 +2,30 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../_core/layout/page_layout.dart';
-import '../../../bloc/theme_mode_cubit.dart';
-import '../../../shared_routes.dart';
+import '../../../../../_shared/bloc/theme_mode_cubit.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class SettingsSection extends StatelessWidget {
+  const SettingsSection({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return PageLayout(
-      title: context.tr('settingsPage.title'),
-      navTab: SharedNavTab.settings,
-      page: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 700),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 40),
-                const _SettingsCard(child: ThemeModeSettingButton()),
-                const SizedBox(height: 20),
-                const _SettingsCard(child: LanguageSettingTile()),
-              ],
-            ),
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: SizedBox(
+        width: 700,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const _SettingsCard(child: ThemeModeSettingButton()),
+              const SizedBox(height: 20),
+              const _SettingsCard(child: LanguageSettingTile()),
+            ],
           ),
         ),
       ),
@@ -96,6 +95,7 @@ class LanguageSettingTile extends StatelessWidget {
           DropdownMenuItem(value: Locale('es'), child: Text('Español 🇪🇸')),
           DropdownMenuItem(value: Locale('fr'), child: Text('Français 🇫🇷')),
         ],
+        borderRadius: BorderRadius.circular(12),
       ),
     );
   }

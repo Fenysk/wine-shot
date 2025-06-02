@@ -6,3 +6,9 @@ sealed class ProfileEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class UpdateFirstName extends ProfileEvent {
+  final String firstName;
+
+  const UpdateFirstName({required this.firstName});
+}

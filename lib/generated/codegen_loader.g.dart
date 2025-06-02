@@ -282,6 +282,8 @@ static const Map<String,dynamic> _fr = {
     "home": "Accueil",
     "profile": "Profil",
     "settings": "Paramètres",
+    "templates": "Templates",
+    "statistics": "Statistiques",
     "logout": "Se Déconnecter",
     "changeLanguage": "Changer de Langue",
     "changeTheme": "Changer de Thème"

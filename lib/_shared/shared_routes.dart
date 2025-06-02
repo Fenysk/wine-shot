@@ -7,10 +7,12 @@ import '../_core/layout/adaptive_layout/adaptive_destination.dart';
 import 'features/error/error_401_page.dart';
 import 'features/home/page/home_page.dart';
 import 'features/landing/page/landing_page_loader.dart';
-import 'features/settings/page/settings_page.dart';
 import 'features/splash/page/splash_page.dart';
 
-enum SharedNavTab implements NavTab { none, home, settings }
+enum SharedNavTab implements NavTab {
+  none,
+  home,
+}
 
 List<AdaptiveDestination> getSharedNavTabs(BuildContext context) {
   return <AdaptiveDestination>[
@@ -20,13 +22,6 @@ List<AdaptiveDestination> getSharedNavTabs(BuildContext context) {
       route: '/home',
       navTab: SharedNavTab.home,
       order: 1,
-    ),
-    AdaptiveDestination(
-      title: context.tr('layoutPage.settings'),
-      icon: Icons.settings,
-      route: '/settings',
-      navTab: SharedNavTab.settings,
-      order: 40,
     ),
   ];
 }
@@ -62,13 +57,6 @@ List<GoRoute> sharedRoutes() {
       redirect: authRouteGuard,
       pageBuilder: (context, state) => FadeTransitionPage(
         child: const HomePage(),
-      ),
-    ),
-    GoRoute(
-      path: "/settings",
-      redirect: authRouteGuard,
-      pageBuilder: (context, state) => FadeTransitionPage(
-        child: const SettingsPage(),
       ),
     ),
   ];

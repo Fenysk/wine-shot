@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../_core/error/failures.dart';
-import 'user.dart';
+import '../../../../_core/error/failures.dart';
+import '../user.dart';
 
 abstract class AuthRepository {
   Stream<User> getUserStream();
@@ -11,6 +11,7 @@ abstract class AuthRepository {
   Future<Either<Failure, void>> logout();
   Future<Either<Failure, void>> login({required String email, required String password});
   Future<Either<Failure, User?>> getUser();
+  void updateCachedUser(User user);
 
   Future<Either<Failure, void>> register({
     required String firstName,
@@ -20,4 +21,6 @@ abstract class AuthRepository {
     required String password,
     required bool iAgree,
   });
+
+  Future<Either<Failure, void>> updateFirstName(String firstName);
 }

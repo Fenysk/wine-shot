@@ -4,17 +4,18 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show AuthApiException;
+import 'package:supabase_flutter/supabase_flutter.dart' as supabase_flutter;
 
-import '../../../_core/constants.dart';
-import '../../../_core/di.dart';
-import '../../../_core/error/exceptions.dart';
-import '../../../_core/error/failures.dart';
-import '../../../_core/network_info.dart';
-import '../domain/auth_repository.dart';
-import '../domain/user.dart';
-import 'models/user_model.dart';
-import 'services/auth_supabase_service.dart';
+import '../../../../_core/constants.dart';
+import '../../../../_core/di.dart';
+import '../../../../_core/error/exceptions.dart';
+import '../../../../_core/error/failures.dart';
+import '../../../../_core/network_info.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../../domain/user.dart';
+import '../models/user_model.dart';
+import '../services/auth_supabase_service.dart';
+import '../services/profile_supabase_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final _userController = BehaviorSubject<User>();
@@ -84,17 +85,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       // final user = await _getUser();
       // await _cacheUser(user);
-      UserModel user = UserModel(
-        authResponse.user!.id,
-        authResponse.user!.userMetadata?['first_name'] ?? '',
-        authResponse.user!.userMetadata?['last_name'] ?? '',
-        authResponse.user!.phone ?? '',
-        authResponse.user!.email ?? '',
-        authResponse.user!.emailConfirmedAt != null,
-        [
-          if (authResponse.user!.role != null) authResponse.user!.role!
-        ],
-      );
+      UserModel user = _userModelFromSupabaseUser(authResponse.user!);
       await _cacheUser(user);
 
       _userController.add(user);
@@ -102,7 +93,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(null);
     } catch (error) {
       switch (error) {
-        case AuthApiException e: // Supabase Exception
+        case supabase_flutter.AuthApiException e: // Supabase Exception
           print("Supabase Exception: ${e.toString()}");
           return Left(ServerFailure(e.toString()));
 
@@ -148,7 +139,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(null);
     } catch (error) {
       switch (error) {
-        case AuthApiException e: // Supabase Exception
+        case supabase_flutter.AuthApiException e: // Supabase Exception
           print("Supabase Exception: ${e.toString()}");
           return Left(ServerFailure(e.toString()));
 
@@ -167,7 +158,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, User?>> getUser() async {
     try {
-      var user = await _getUser();
+      var user = await _getUserModel();
       _userController.add(user);
       return Right(user);
     } catch (error) {
@@ -179,11 +170,52 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  Future<UserModel> _getUser() async {
-    String path = '/users/me';
-    final response = await dio.get(path);
-    var user = UserModel.fromJson(response.data['data']);
-    return user;
+  @override
+  void updateCachedUser(User user) {
+    final userModel = UserModel(user.id, user.firstName, user.lastName, user.phone, user.email, user.isEmailVerified, user.roles);
+
+    _cacheUser(userModel);
+  }
+
+  @override
+  Future<Either<Failure, void>> updateFirstName(String firstName) async {
+    try {
+      final editUserFirstNameResponse = await di<ProfileSupabaseService>().updateFirstName(firstName);
+
+      UserModel user = _userModelFromSupabaseUser(editUserFirstNameResponse!);
+
+      _userController.add(user);
+
+      await _cacheUser(user);
+
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure('Failed to update first name'));
+    }
+  }
+
+  Future<UserModel> _getUserModel() async {
+    final user = await di<AuthSupabaseService>().getCurrentUser();
+
+    if (user == null) {
+      throw CacheException();
+    }
+
+    return _userModelFromSupabaseUser(user);
+  }
+
+  UserModel _userModelFromSupabaseUser(supabase_flutter.User user) {
+    return UserModel(
+      user.id,
+      user.userMetadata?['first_name'] ?? '',
+      user.userMetadata?['last_name'] ?? '',
+      user.phone ?? '',
+      user.email ?? '',
+      user.emailConfirmedAt != null,
+      [
+        if (user.role != null) user.role!
+      ],
+    );
   }
 
   Future<void> _cacheToken(String token) async {

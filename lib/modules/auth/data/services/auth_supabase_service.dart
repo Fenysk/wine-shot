@@ -30,9 +30,8 @@ class AuthSupabaseServiceImpl implements AuthSupabaseService {
   }
 
   @override
-  Future<User?> getCurrentUser() {
-    // TODO: implement getCurrentUser
-    throw UnimplementedError();
+  Future<User?> getCurrentUser() async {
+    return SupabaseConfig.client.auth.currentUser;
   }
 
   @override

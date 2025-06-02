@@ -47,8 +47,7 @@ class UserModel extends User {
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
-  const UserModel(this.id, this.firstName, this.lastName, this.phone, this.email,
-      this.isEmailVerified, this.roles)
+  const UserModel(this.id, this.firstName, this.lastName, this.phone, this.email, this.isEmailVerified, this.roles)
       : super(
           id: id,
           firstName: firstName,

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/auth_repository.dart';
+import '../../../domain/repositories/auth_repository.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
@@ -20,6 +20,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     Emitter<RegisterState> emit,
   ) async {
     emit(RegisterLoading());
+
     var result = await _authRepository.register(
       firstName: event.firstName,
       lastName: event.lastName,
@@ -28,6 +29,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       password: event.password,
       iAgree: event.iAgree,
     );
+
     emit(result.fold(
       (error) => RegisterFailure(error: error.getMessage()),
       (_) => RegisterSuccess(),

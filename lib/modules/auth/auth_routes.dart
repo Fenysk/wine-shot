@@ -8,16 +8,34 @@ import 'features/login/page/login_page.dart';
 import 'features/profile/page/profile_page.dart';
 import 'features/register/page/register_page.dart';
 
-enum AuthNavTab implements NavTab { profile }
+enum AuthNavTab implements NavTab {
+  templates,
+  statistics,
+  profile
+}
 
 List<AdaptiveDestination> getAuthNavTabs(BuildContext context) {
   return <AdaptiveDestination>[
+    AdaptiveDestination(
+      title: context.tr('layoutPage.templates'),
+      icon: Icons.folder,
+      route: '/templates',
+      navTab: AuthNavTab.templates,
+      order: 10,
+    ),
+    AdaptiveDestination(
+      title: context.tr('layoutPage.statistics'),
+      icon: Icons.bar_chart,
+      route: '/statistics',
+      navTab: AuthNavTab.statistics,
+      order: 20,
+    ),
     AdaptiveDestination(
       title: context.tr('layoutPage.profile'),
       icon: Icons.person,
       route: '/profile',
       navTab: AuthNavTab.profile,
-      order: 30,
+      order: 50,
     ),
   ];
 }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../domain/auth_usecases.dart';
+import '../domain/usecases/auth_usecases.dart';
 import '../domain/user.dart';
 
 part 'auth_event.dart';

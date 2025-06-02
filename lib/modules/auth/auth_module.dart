@@ -8,11 +8,13 @@ import '../../_core/di.dart';
 import '../../_core/layout/adaptive_layout/adaptive_destination.dart';
 import 'auth_routes.dart';
 import 'bloc/auth_bloc.dart';
-import 'data/auth_repository_impl.dart';
+import 'data/repositories/auth_repository_impl.dart';
 import 'data/models/user_model.dart';
-import 'domain/auth_repository.dart';
-import 'domain/auth_usecases.dart';
+import 'data/services/profile_supabase_service.dart';
+import 'domain/repositories/auth_repository.dart';
+import 'domain/usecases/auth_usecases.dart';
 import 'features/login/bloc/login_bloc.dart';
+import 'features/profile/bloc/profile_bloc.dart';
 import 'features/register/bloc/register_bloc.dart';
 
 Future<void> registerAuthModule() async {
@@ -24,6 +26,7 @@ Future<void> registerAuthModule() async {
 
   //* inject services
   di.registerLazySingleton<AuthSupabaseService>(() => AuthSupabaseServiceImpl());
+  di.registerLazySingleton<ProfileSupabaseService>(() => ProfileSupabaseServiceImpl());
 
   //* Inject Usecases
   di.registerLazySingleton<AuthUsecases>(() => AuthUsecases(di()));
@@ -32,6 +35,7 @@ Future<void> registerAuthModule() async {
   di.registerLazySingleton(() => AuthBloc(userUsecase: di())..add(AuthStatusSubscriptionRequested()));
   di.registerFactory(() => LoginBloc(authRepository: di()));
   di.registerFactory(() => RegisterBloc(authRepository: di()));
+  di.registerFactory(() => ProfileBloc(authUsecase: di()));
 
   //* register routes and nav tabs
   di<List<RouteBase>>(instanceName: Constants.mainRoutesDiKey).addAll(authRoutes());
