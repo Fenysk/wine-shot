@@ -12,13 +12,13 @@ import '../../../../_core/error/exceptions.dart';
 import '../../../../_core/error/failures.dart';
 import '../../../../_core/network_info.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../../domain/user.dart';
+import '../../domain/entities/user_entity.dart';
 import '../models/user_model.dart';
-import '../services/auth_supabase_service.dart';
-import '../services/profile_supabase_service.dart';
+import '../sources/auth_supabase_source.dart';
+import '../sources/profile_supabase_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final _currentUserController = BehaviorSubject<User>();
+  final _currentUserController = BehaviorSubject<UserEntity>();
 
   final Dio dio;
   final HiveInterface hive;
@@ -31,13 +31,13 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Stream<User> getCurrentUserStream() => _currentUserController.asBroadcastStream();
+  Stream<UserEntity> getCurrentUserStream() => _currentUserController.asBroadcastStream();
 
   @override
   Future<Either<Failure, void>> logout() async {
     try {
       await clearCache();
-      _currentUserController.add(User.empty);
+      _currentUserController.add(UserEntity.empty);
       return Right(null);
     } catch (e) {
       return Left(CacheFailure("Oops, Something went wrong while clearing cached data!"));
@@ -58,7 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       return Right(null);
     } catch (error) {
-      _currentUserController.add(User.empty);
+      _currentUserController.add(UserEntity.empty);
       return Left(CacheFailure('Error occurred while loading cached data!'));
     }
   }
@@ -74,7 +74,7 @@ class AuthRepositoryImpl implements AuthRepository {
       //   "email": email,
       //   "password": password
       // });
-      final authResponse = await di<AuthSupabaseService>().signInWithEmailAndPassword(email, password);
+      final authResponse = await di<AuthSupabaseSource>().signInWithEmailAndPassword(email, password);
       if (authResponse == null || authResponse.user == null || authResponse.session == null) {
         return Left(ServerFailure('Invalid email or password'));
       }
@@ -128,7 +128,7 @@ class AuthRepositoryImpl implements AuthRepository {
       //   'password': password,
       //   'isTermAndConditionAgreed': iAgree,
       // });
-      final authResponse = await di<AuthSupabaseService>().signUpWithEmailAndPassword(email, password);
+      final authResponse = await di<AuthSupabaseSource>().signUpWithEmailAndPassword(email, password);
       if (authResponse == null || authResponse.user == null) {
         return Left(ServerFailure('Registration failed.'));
       }
@@ -156,7 +156,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User?>> getCurrentUser() async {
+  Future<Either<Failure, UserEntity?>> getCurrentUser() async {
     try {
       var user = await _getUserModel();
       _currentUserController.add(user);
@@ -171,7 +171,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  void updateCachedUser(User user) {
+  void updateCachedUser(UserEntity user) {
     final userModel = UserModel(user.id, user.firstName, user.lastName, user.phone, user.email, user.isEmailVerified, user.roles);
 
     _cacheUser(userModel);
@@ -185,7 +185,7 @@ class AuthRepositoryImpl implements AuthRepository {
     String phone,
   ) async {
     try {
-      final editUserFirstNameResponse = await di<ProfileSupabaseService>().updateProfile(firstName, lastName, email, phone);
+      final editUserFirstNameResponse = await di<ProfileSupabaseSource>().updateProfile(firstName, lastName, email, phone);
 
       UserModel user = _userModelFromSupabaseUser(editUserFirstNameResponse!);
 
@@ -200,7 +200,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   Future<UserModel> _getUserModel() async {
-    final user = await di<AuthSupabaseService>().getCurrentUser();
+    final user = await di<AuthSupabaseSource>().getCurrentUser();
 
     if (user == null) {
       throw CacheException();

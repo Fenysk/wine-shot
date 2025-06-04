@@ -3,13 +3,13 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../domain/user.dart';
+import '../../domain/entities/user_entity.dart';
 
 part 'user_model.g.dart';
 
 @HiveType(typeId: 1)
 @JsonSerializable(createToJson: false)
-class UserModel extends User {
+class UserModel extends UserEntity {
   @override
   @HiveField(0)
   @JsonKey(name: 'id')

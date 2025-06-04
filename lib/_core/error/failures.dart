@@ -10,7 +10,9 @@ class ServerFailure extends Failure {
   ServerFailure([this.message = 'Oops something went wrong']);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [
+        message
+      ];
 
   @override
   String getMessage() => message;
@@ -22,7 +24,9 @@ class CacheFailure extends Failure {
   CacheFailure(this.message);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [
+        message
+      ];
 
   @override
   String getMessage() => message;

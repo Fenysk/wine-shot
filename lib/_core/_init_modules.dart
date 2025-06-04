@@ -9,10 +9,10 @@ import 'layout/adaptive_layout/adaptive_destination.dart';
 
 class AppModules {
   /// Initializes modules before the Flutter app runs (before `runApp()`).
-  static void initBeforeRunApp() {
-    registerAuthModule();
-    registerSharedModule();
-    registerTemplateModule();
+  static Future<void> initBeforeRunApp() async {
+    await registerAuthModule();
+    await registerSharedModule();
+    await registerTemplateModule();
   }
 
   /// Initializes modules after the Flutter app has started (after `runApp()`), when BuildContext is available.

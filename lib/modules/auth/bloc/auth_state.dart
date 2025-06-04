@@ -1,19 +1,24 @@
 part of 'auth_bloc.dart';
 
-enum AuthStatus { unknown, authenticated, unauthenticated, unverified }
+enum AuthStatus {
+  unknown,
+  authenticated,
+  unauthenticated,
+  unverified
+}
 
 class AuthState extends Equatable {
   final AuthStatus status;
-  final User user;
+  final UserEntity user;
 
   const AuthState({
     this.status = AuthStatus.unknown,
-    this.user = User.empty,
+    this.user = UserEntity.empty,
   });
 
   AuthState copyWith({
     AuthStatus? status,
-    User? user,
+    UserEntity? user,
   }) =>
       AuthState(
         status: status ?? this.status,
@@ -21,5 +26,8 @@ class AuthState extends Equatable {
       );
 
   @override
-  List<Object> get props => [status, user];
+  List<Object> get props => [
+        status,
+        user
+      ];
 }

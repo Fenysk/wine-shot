@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/workout_bloc.dart';
 import 'new_template_name_dialog.dart';
 
-class NewTemplateButton extends StatefulWidget {
-  const NewTemplateButton({
+class NewWorkoutButton extends StatefulWidget {
+  const NewWorkoutButton({
     super.key,
   });
 
   @override
-  State<NewTemplateButton> createState() => _NewTemplateButtonState();
+  State<NewWorkoutButton> createState() => _NewWorkoutButtonState();
 }
 
-class _NewTemplateButtonState extends State<NewTemplateButton> {
+class _NewWorkoutButtonState extends State<NewWorkoutButton> {
   void askNewTemplateName() {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
-        return NewTemplateNameDialog();
+        return BlocProvider.value(
+          value: BlocProvider.of<WorkoutBloc>(context),
+          child: NewWorkoutNameDialog(),
+        );
       },
     );
   }

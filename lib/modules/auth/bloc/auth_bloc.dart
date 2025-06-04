@@ -3,17 +3,30 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../domain/usecases/auth_usecases.dart';
-import '../domain/user.dart';
+import '../domain/repositories/auth_repository.dart';
+import '../domain/usecases/get_user_stream_usecase.dart';
+import '../domain/usecases/is_authenticated_usecase.dart';
+import '../domain/usecases/logout_usecase.dart';
+import '../domain/entities/user_entity.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthUsecases _userUsecase;
+  final AuthRepository _authRepository;
+  final GetUserStreamUseCase _getUserStreamUseCase;
+  final IsAuthenticatedUseCase _isAuthenticatedUseCase;
+  final LogoutUseCase _logoutUseCase;
 
-  AuthBloc({required AuthUsecases userUsecase})
-      : _userUsecase = userUsecase,
+  AuthBloc({
+    required AuthRepository authRepository,
+    required GetUserStreamUseCase getUserStreamUseCase,
+    required IsAuthenticatedUseCase isAuthenticatedUseCase,
+    required LogoutUseCase logoutUseCase,
+  })  : _authRepository = authRepository,
+        _getUserStreamUseCase = getUserStreamUseCase,
+        _isAuthenticatedUseCase = isAuthenticatedUseCase,
+        _logoutUseCase = logoutUseCase,
         super(const AuthState()) {
     on<AppLoaded>(_appLoaded);
     on<AuthStatusSubscriptionRequested>(_onAuthSubscriptionRequested);
@@ -22,24 +35,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   @override
   Future<void> close() {
-    _userUsecase.dispose();
+    _authRepository.dispose();
     return super.close();
   }
 
   Future<void> _appLoaded(AppLoaded event, Emitter<AuthState> emit) async {
-    await _userUsecase.isAuthenticated();
+    await _isAuthenticatedUseCase();
   }
 
   Future<void> _onAuthSubscriptionRequested(
     AuthStatusSubscriptionRequested event,
     Emitter<AuthState> emit,
   ) async {
-    await _userUsecase.isAuthenticated();
-    await emit.forEach<User>(
-      _userUsecase.getUserStream(),
+    await _isAuthenticatedUseCase();
+    await emit.forEach<UserEntity>(
+      _getUserStreamUseCase(),
       onData: (user) {
         // print("auth_bloc: $user");
-        if (user == User.empty) {
+        if (user == UserEntity.empty) {
           return state.copyWith(
             status: AuthStatus.unauthenticated,
             user: user,
@@ -70,6 +83,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthLogoutRequested event,
     Emitter<AuthState> emit,
   ) {
-    _userUsecase.logout();
+    _logoutUseCase();
   }
 }

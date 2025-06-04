@@ -1,16 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/repositories/auth_repository.dart';
+import '../../../domain/usecases/register_usecase.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final AuthRepository _authRepository;
+  final RegisterUseCase _registerUseCase;
 
-  RegisterBloc({required AuthRepository authRepository})
-      : _authRepository = authRepository,
+  RegisterBloc({required RegisterUseCase registerUseCase})
+      : _registerUseCase = registerUseCase,
         super(RegisterInitial()) {
     on<RegistrationRequested>(_registrationRequested);
   }
@@ -21,7 +21,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async {
     emit(RegisterLoading());
 
-    var result = await _authRepository.register(
+    var result = await _registerUseCase(
       firstName: event.firstName,
       lastName: event.lastName,
       phone: event.phone,

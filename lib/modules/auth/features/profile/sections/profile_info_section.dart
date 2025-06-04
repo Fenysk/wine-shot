@@ -6,12 +6,12 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../../_core/di.dart';
 import '../../../../../_shared/widgets/show_toast_notification.dart';
-import '../../../domain/user.dart';
+import '../../../domain/entities/user_entity.dart';
 import '../bloc/profile_bloc.dart';
 import '../widgets/submit_button.dart';
 
 class ProfileInfoSection extends StatefulWidget {
-  final User user;
+  final UserEntity user;
   final ThemeData theme;
 
   const ProfileInfoSection({super.key, required this.user, required this.theme});

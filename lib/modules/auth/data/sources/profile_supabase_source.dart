@@ -1,7 +1,7 @@
 import 'package:clean_starter/_core/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract class ProfileSupabaseService {
+abstract class ProfileSupabaseSource {
   Future<User?> getCurrentUser();
   Future<User?> updateProfile(
     String firstName,
@@ -11,7 +11,7 @@ abstract class ProfileSupabaseService {
   );
 }
 
-class ProfileSupabaseServiceImpl implements ProfileSupabaseService {
+class ProfileSupabaseSourceImpl implements ProfileSupabaseSource {
   @override
   Future<User?> updateProfile(
     String firstName,

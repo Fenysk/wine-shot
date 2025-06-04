@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class TemplateNameField extends StatelessWidget {
-  const TemplateNameField({
+class WorkoutNameField extends StatelessWidget {
+  const WorkoutNameField({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      name: 'templateName',
+      name: 'workoutName',
       decoration: InputDecoration(
-        hintText: context.tr('templatesPage.templateNameHint'),
+        hintText: context.tr('templatesPage.workoutNameNameHint'),
         border: const OutlineInputBorder(),
       ),
       autofocus: true,
