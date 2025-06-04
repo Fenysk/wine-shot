@@ -2,21 +2,22 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../_shared/widgets/custom_dialog.dart';
 import '../bloc/workout_bloc.dart';
 import 'workout_name_field.dart';
 
-class NewWorkoutNameDialog extends StatefulWidget {
-  const NewWorkoutNameDialog({
+class NewWorkoutDialog extends StatefulWidget {
+  const NewWorkoutDialog({
     super.key,
   });
 
   @override
-  State<NewWorkoutNameDialog> createState() => _NewWorkoutNameDialogState();
+  State<NewWorkoutDialog> createState() => _NewWorkoutDialogState();
 }
 
-class _NewWorkoutNameDialogState extends State<NewWorkoutNameDialog> {
+class _NewWorkoutDialogState extends State<NewWorkoutDialog> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   @override
@@ -24,9 +25,13 @@ class _NewWorkoutNameDialogState extends State<NewWorkoutNameDialog> {
     return BlocProvider.value(
       value: BlocProvider.of<WorkoutBloc>(context),
       child: BlocListener<WorkoutBloc, WorkoutState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is WorkoutSavedSuccess) {
+            final workoutId = state.workoutId;
+
+            // ! TODO: Fix this transition
             Navigator.of(context).pop();
+            context.go('/templates/$workoutId');
           } else if (state is WorkoutSavingError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

@@ -143,8 +143,7 @@ class AdaptiveLayout extends StatelessWidget {
     // this.isDesktopDrawerExpanded = true,
   });
 
-  Widget _sideHeader(BuildContext context, void Function()? onMenuPressed,
-      [bool isExpanded = false]) {
+  Widget _sideHeader(BuildContext context, void Function()? onMenuPressed, [bool isExpanded = false]) {
     return SizedBox(
       height: 56,
       child: Row(
@@ -303,8 +302,7 @@ class AdaptiveLayout extends StatelessWidget {
                 children: [
                   _sideHeader(context, onMenuPressed, isExpanded),
                   const SizedBox(height: 10),
-                  for (final destination in destinations)
-                    _expandedDrawerTile(destination, context),
+                  for (final destination in destinations) _expandedDrawerTile(destination, context),
                 ],
               ),
             ),
@@ -333,8 +331,7 @@ class AdaptiveLayout extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  for (final destination in destinations)
-                    _collapsedDrawerTile(destination, context)
+                  for (final destination in destinations) _collapsedDrawerTile(destination, context)
                 ],
               ),
             ),
@@ -347,13 +344,9 @@ class AdaptiveLayout extends StatelessWidget {
   Scaffold _buildBottomNavigationScaffold(BuildContext context) {
     // final GlobalKey<ScaffoldState> key = GlobalKey();
     const int bottomNavigationOverflow = 5;
-    final bottomDestinations =
-        destinations.sublist(0, math.min(destinations.length, bottomNavigationOverflow));
+    final bottomDestinations = destinations.sublist(0, math.min(destinations.length, bottomNavigationOverflow));
     bool hasDrawer = destinations.length > bottomNavigationOverflow;
-    final drawerDestinations = hasDrawer
-        ? destinations
-            .sublist(includeBaseDestinationsInMenu ? 0 : bottomNavigationOverflow)
-        : <AdaptiveDestination>[];
+    final drawerDestinations = hasDrawer ? destinations.sublist(includeBaseDestinationsInMenu ? 0 : bottomNavigationOverflow) : <AdaptiveDestination>[];
     int selectedIndex = bottomDestinations.indexWhere((d) => d.navTab == selectedTab);
 
     return Scaffold(
@@ -394,8 +387,7 @@ class AdaptiveLayout extends StatelessWidget {
   Scaffold _buildNavigationRailScaffold(BuildContext context) {
     // final GlobalKey<ScaffoldState> key = GlobalKey();
     const int railDestinationsOverflow = 7;
-    final railDestinations =
-        destinations.sublist(0, math.min(destinations.length, railDestinationsOverflow));
+    final railDestinations = destinations.sublist(0, math.min(destinations.length, railDestinationsOverflow));
 
     return Scaffold(
       key: drawerKey,
@@ -517,8 +509,7 @@ class AdaptiveLayout extends StatelessWidget {
 
   @override
   Scaffold build(BuildContext context) {
-    final NavigationTypeResolver navigationTypeResolver =
-        this.navigationTypeResolver ?? _defaultNavigationTypeResolver;
+    final NavigationTypeResolver navigationTypeResolver = this.navigationTypeResolver ?? _defaultNavigationTypeResolver;
     var navigationType = navigationTypeResolver(context);
     switch (navigationType) {
       case NavigationType.bottom:

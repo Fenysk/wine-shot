@@ -13,11 +13,11 @@ class WorkoutRepositoryImpl implements WorkoutRepository {
   WorkoutRepositoryImpl({required this.localDataSource});
 
   @override
-  Future<Either<Failure, void>> saveWorkout(WorkoutEntity workout) async {
+  Future<Either<Failure, String>> saveWorkout(WorkoutEntity workout) async {
     try {
       final workoutModel = WorkoutModel(id: workout.id, name: workout.name);
       await localDataSource.saveWorkout(workoutModel);
-      return Right(null);
+      return Right(workoutModel.id);
     } on CacheException {
       return Left(CacheFailure('Failed to save workout locally'));
     } catch (e) {

@@ -3,7 +3,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/workout_bloc.dart';
-import 'new_template_name_dialog.dart';
+import 'new_workout_dialog.dart';
 
 class NewWorkoutButton extends StatefulWidget {
   const NewWorkoutButton({
@@ -15,13 +15,13 @@ class NewWorkoutButton extends StatefulWidget {
 }
 
 class _NewWorkoutButtonState extends State<NewWorkoutButton> {
-  void askNewTemplateName() {
+  void openNewWorkoutDialog() {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
         return BlocProvider.value(
           value: BlocProvider.of<WorkoutBloc>(context),
-          child: NewWorkoutNameDialog(),
+          child: NewWorkoutDialog(),
         );
       },
     );
@@ -32,13 +32,13 @@ class _NewWorkoutButtonState extends State<NewWorkoutButton> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return isMobile
         ? FloatingActionButton(
-            onPressed: askNewTemplateName,
+            onPressed: openNewWorkoutDialog,
             child: const Icon(Icons.add),
           )
         : ElevatedButton.icon(
             icon: const Icon(Icons.add),
             label: const Text('New Template'),
-            onPressed: askNewTemplateName,
+            onPressed: openNewWorkoutDialog,
           );
   }
 }

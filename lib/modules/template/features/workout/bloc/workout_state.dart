@@ -43,7 +43,24 @@ class WorkoutFetched extends WorkoutState {
 
 class WorkoutSaving extends WorkoutState {}
 
-class WorkoutSavedSuccess extends WorkoutState {}
+class WorkoutSavedSuccess extends WorkoutState {
+  final String workoutId;
+
+  const WorkoutSavedSuccess({required this.workoutId});
+
+  WorkoutSavedSuccess copyWith({
+    String? workoutId,
+  }) {
+    return WorkoutSavedSuccess(
+      workoutId: workoutId ?? this.workoutId,
+    );
+  }
+
+  @override
+  List<Object> get props => [
+        workoutId
+      ];
+}
 
 class WorkoutSavingError extends WorkoutState {
   final String message;

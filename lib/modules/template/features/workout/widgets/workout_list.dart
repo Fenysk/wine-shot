@@ -6,6 +6,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../bloc/workout_bloc.dart';
 import 'new_workout_button.dart';
+import 'workout_item.dart';
 
 class WorkoutList extends StatelessWidget {
   const WorkoutList({
@@ -42,7 +43,7 @@ class WorkoutList extends StatelessWidget {
               if (isEmpty) return _buildEmptyContent(context, isMobile);
               if (isLoading) return _buildLoadingContent();
               if (hasError) return _buildErrorContent(state);
-              if (isFetched) return _buildMainContent(isMobile, state.workouts);
+              if (isFetched) return _buildMainContent(context, isMobile, state.workouts);
 
               return _buildDefaultContent(state);
             },
@@ -58,7 +59,7 @@ class WorkoutList extends StatelessWidget {
     );
   }
 
-  Widget _buildMainContent(bool isMobile, List<WorkoutEntity> workouts) {
+  Widget _buildMainContent(BuildContext context, bool isMobile, List<WorkoutEntity> workouts) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,9 +78,7 @@ class WorkoutList extends StatelessWidget {
             itemCount: workouts.length,
             itemBuilder: (context, index) {
               final workout = workouts[index];
-              return ListTile(
-                title: Text(workout.name),
-              );
+              return WorkoutItem(workout: workout);
             },
           ),
         ),

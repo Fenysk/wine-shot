@@ -13,7 +13,7 @@ class SaveWorkoutUseCase implements UseCase<void, String> {
   SaveWorkoutUseCase(this.repository, this.uuid);
 
   @override
-  Future<Either<Failure, void>> call(String name) async {
+  Future<Either<Failure, String>> call(String name) async {
     final workout = WorkoutEntity(
       id: uuid.v4(),
       name: name,

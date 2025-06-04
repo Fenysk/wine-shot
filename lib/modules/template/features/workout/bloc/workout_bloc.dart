@@ -46,8 +46,8 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
 
     result.fold(
       (failure) => emit(WorkoutSavingError(failure.getMessage())),
-      (_) {
-        emit(WorkoutSavedSuccess());
+      (workoutId) {
+        emit(WorkoutSavedSuccess(workoutId: workoutId));
         add(LoadWorkoutsEvent());
       },
     );
