@@ -243,6 +243,11 @@ static const Map<String,dynamic> _es = {
   }
 };
 static const Map<String,dynamic> _fr = {
+  "common": {
+    "cancel": "Annuler",
+    "create": "Créer",
+    "requiredField": "Ce champ est requis"
+  },
   "loginPage": {
     "signIn": "Se Connecter",
     "password": "Mot de Passe",
@@ -272,11 +277,11 @@ static const Map<String,dynamic> _fr = {
     "title": "Accueil",
     "hello": "Bonjour"
   },
-  "settingsPage": {
-    "title": "Paramètres",
-    "darkMode": "Mode Sombre",
-    "lightMode": "Mode Clair",
-    "language": "Langue"
+  "templatesPage": {
+    "title": "Templates",
+    "newTemplate": "Nouveau template",
+    "templateNameHint": "Nom du nouveau template...",
+    "emptyTemplateList": "Aucun template enregistré."
   },
   "layoutPage": {
     "home": "Accueil",
@@ -308,16 +313,6 @@ static const Map<String,dynamic> _fr = {
     "viewOnGithub": "Voir sur GitHub",
     "paragraph3": "Nous accueillons toutes les contributions !\nFork le repo, faites des changements et soumettez une demande de pull.",
     "contributionsWelcome": "🤝 Contributions Bienvenues"
-  },
-  "postPage": {
-    "title1": "Posts",
-    "title2": "Mes Posts",
-    "edit": "Éditer",
-    "delete": "Supprimer",
-    "publish": "Publier",
-    "postDetails": "Détails du Post",
-    "editPost": "Éditer le Post",
-    "createPost": "Créer un Post"
   }
 };
 static const Map<String,dynamic> _zh = {

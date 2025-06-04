@@ -1,11 +1,8 @@
-import 'package:clean_starter/modules/auth/features/register/widgets/first_name_field.dart';
-import 'package:clean_starter/modules/auth/features/register/widgets/last_name_field.dart';
 import 'package:clean_starter/modules/auth/features/register/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:toastification/toastification.dart';
 
 import '../../../../../_core/di.dart';
 import '../../../../../_shared/widgets/show_toast_notification.dart';

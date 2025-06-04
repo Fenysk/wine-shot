@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../_shared/shared_module.dart';
 import '../modules/auth/auth_module.dart';
+import '../modules/template/template_module.dart';
 import 'constants.dart';
 import 'di.dart';
 import 'layout/adaptive_layout/adaptive_destination.dart';
@@ -11,6 +12,7 @@ class AppModules {
   static void initBeforeRunApp() {
     registerAuthModule();
     registerSharedModule();
+    registerTemplateModule();
   }
 
   /// Initializes modules after the Flutter app has started (after `runApp()`), when BuildContext is available.

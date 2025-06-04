@@ -19,8 +19,7 @@ class InitialAppData {
       case 'Dark':
         return ThemeMode.dark;
       default:
-        return ThemeMode.dark;
-      // return ThemeMode.system;
+        return ThemeMode.system;
     }
   }
 }

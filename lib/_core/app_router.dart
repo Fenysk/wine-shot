@@ -27,9 +27,7 @@ FutureOr<String?> authRouteGuard(BuildContext context, GoRouterState state) asyn
   var authBloc = context.read<AuthBloc>();
 
   if (authBloc.state.status == AuthStatus.unknown) {
-    final wait = authBloc.stream.firstWhere((state) =>
-        state.status == AuthStatus.authenticated ||
-        state.status == AuthStatus.unauthenticated);
+    final wait = authBloc.stream.firstWhere((state) => state.status == AuthStatus.authenticated || state.status == AuthStatus.unauthenticated);
     context.read<AuthBloc>().add(AppLoaded());
     await wait;
   }
@@ -45,9 +43,7 @@ FutureOr<String?> unAuthRouteGuard(BuildContext context, GoRouterState state) as
   var authBloc = context.read<AuthBloc>();
 
   if (authBloc.state.status == AuthStatus.unknown) {
-    final wait = authBloc.stream.firstWhere((state) =>
-        state.status == AuthStatus.authenticated ||
-        state.status == AuthStatus.unauthenticated);
+    final wait = authBloc.stream.firstWhere((state) => state.status == AuthStatus.authenticated || state.status == AuthStatus.unauthenticated);
     context.read<AuthBloc>().add(AppLoaded());
     await wait;
   }
