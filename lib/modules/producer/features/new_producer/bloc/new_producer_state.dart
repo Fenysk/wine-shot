@@ -1,34 +1,39 @@
 part of 'new_producer_bloc.dart';
 
-sealed class NewProducerState extends Equatable {
-  const NewProducerState();
-
-  @override
-  List<Object> get props => [];
+enum NewProducerStatus {
+  initial,
+  loading,
+  success,
+  failure
 }
 
-class NewProducerInitial extends NewProducerState {}
+class NewProducerState extends Equatable {
+  final NewProducerStatus status;
+  final String? errorMessage;
 
-class NewProducerLoading extends NewProducerState {}
+  const NewProducerState({
+    this.status = NewProducerStatus.initial,
+    this.errorMessage,
+  });
 
-class NewProducerSuccess extends NewProducerState {
-  final ProducerEntity producer;
+  factory NewProducerState.initial() => const NewProducerState();
 
-  const NewProducerSuccess({required this.producer});
+  factory NewProducerState.loading() => const NewProducerState(
+        status: NewProducerStatus.loading,
+      );
+
+  factory NewProducerState.success() => const NewProducerState(
+        status: NewProducerStatus.success,
+      );
+
+  factory NewProducerState.failure(String message) => NewProducerState(
+        status: NewProducerStatus.failure,
+        errorMessage: message,
+      );
 
   @override
-  List<Object> get props => [
-        producer
-      ];
-}
-
-class NewProducerFailure extends NewProducerState {
-  final String message;
-
-  const NewProducerFailure({required this.message});
-
-  @override
-  List<Object> get props => [
-        message
+  List<Object?> get props => [
+        status,
+        errorMessage
       ];
 }

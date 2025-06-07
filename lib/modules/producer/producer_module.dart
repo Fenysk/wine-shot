@@ -8,12 +8,13 @@ import 'domain/repositories/producer_repository.dart';
 import 'domain/usecases/add_producer_usecase.dart';
 import 'domain/usecases/get_producers_usecase.dart';
 import 'bloc/producer_bloc.dart';
+import 'features/new_producer/bloc/new_producer_bloc.dart';
 import 'producer_routes.dart';
 
 // Initialize GetIt instance
 final GetIt di = GetIt.instance;
 
-Future<void> registerTemplateModule() async {
+Future<void> registerProducerModule() async {
   // Register routes
   di<List<RouteBase>>(instanceName: Constants.mainRoutesDiKey).addAll(producerRoutes());
 
@@ -23,10 +24,11 @@ Future<void> registerTemplateModule() async {
   // Register repository
   di.registerLazySingleton<ProducerRepository>(() => ProducerRepositoryImpl(remoteSource: di()));
 
-  // Register use case
+  // Register use cases
   di.registerLazySingleton<GetProducersUsecase>(() => GetProducersUsecase(repository: di()));
   di.registerLazySingleton<AddProducerUsecase>(() => AddProducerUsecase(repository: di()));
 
-  // Register BLoC
+  // Register BLoCs
   di.registerFactory<ProducerBloc>(() => ProducerBloc(getProducersUsecase: di()));
+  di.registerFactory<NewProducerBloc>(() => NewProducerBloc(addProducerUsecase: di()));
 }

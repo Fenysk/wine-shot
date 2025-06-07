@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../_shared/shared_module.dart';
 import '../modules/auth/auth_module.dart';
-import '../modules/producer/template_module.dart' as template_module;
+import '../modules/region/region_module.dart';
+import '../modules/producer/producer_module.dart';
 import 'constants.dart';
-import 'di.dart';
+import 'di.dart' as di;
 import 'layout/adaptive_layout/adaptive_destination.dart';
 
 class AppModules {
@@ -12,12 +13,13 @@ class AppModules {
   static Future<void> initBeforeRunApp() async {
     await registerAuthModule();
     await registerSharedModule();
-    await template_module.registerTemplateModule();
+    await registerRegionModule();
+    await registerProducerModule();
   }
 
   /// Initializes modules after the Flutter app has started (after `runApp()`), when BuildContext is available.
   static void initAfterRunApp(BuildContext context) {
-    var navTabs = di<List<AdaptiveDestination>>(instanceName: Constants.navTabsDiKey);
+    var navTabs = di.di<List<AdaptiveDestination>>(instanceName: Constants.navTabsDiKey);
     //* Reset Nav tabs to avoid duplication
     navTabs.clear();
 
