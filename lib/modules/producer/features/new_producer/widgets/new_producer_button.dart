@@ -6,9 +6,15 @@ import '../../../../../_core/di.dart';
 import '../bloc/new_producer_bloc.dart';
 import 'new_producer_dialog.dart';
 import '../../../../region/features/region_list/bloc/region_bloc.dart';
+import '../../../bloc/producer_bloc.dart';
 
 class NewProducerButton extends StatelessWidget {
-  const NewProducerButton({super.key});
+  final ProducerBloc producerBloc;
+
+  const NewProducerButton({
+    super.key,
+    required this.producerBloc,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class NewProducerButton extends StatelessWidget {
           providers: [
             BlocProvider<NewProducerBloc>(create: (_) => di<NewProducerBloc>()),
             BlocProvider<RegionBloc>(create: (_) => di<RegionBloc>()..add(LoadRegionsEvent())),
+            BlocProvider<ProducerBloc>.value(value: producerBloc),
           ],
           child: const NewProducerDialog(),
         );

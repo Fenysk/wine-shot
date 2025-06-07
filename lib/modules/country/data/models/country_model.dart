@@ -2,12 +2,11 @@
 
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 import '../../domain/entities/country_entity.dart';
 
 part 'country_model.g.dart';
 
-@HiveType(typeId: 0) // Assurez-vous que typeId est unique
+@HiveType(typeId: 0)
 @JsonSerializable(createToJson: false)
 class CountryModel extends CountryEntity {
   @override

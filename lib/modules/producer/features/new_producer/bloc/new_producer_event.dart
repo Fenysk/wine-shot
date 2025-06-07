@@ -1,19 +1,19 @@
 part of 'new_producer_bloc.dart';
 
-sealed class NewProducerEvent extends Equatable {
+abstract class NewProducerEvent extends Equatable {
   const NewProducerEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class AddProducerEvent extends NewProducerEvent {
-  final ProducerEntity producer;
+  final NewProducerDto producerDto;
 
-  const AddProducerEvent(this.producer);
+  const AddProducerEvent(this.producerDto);
 
   @override
-  List<Object> get props => [
-        producer
+  List<Object?> get props => [
+        producerDto
       ];
 }

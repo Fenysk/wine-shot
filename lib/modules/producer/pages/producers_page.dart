@@ -8,6 +8,7 @@ import '../../../_core/layout/page_layout.dart';
 import '../../auth/auth_routes.dart';
 import '../domain/entities/producer_entity.dart';
 import '../bloc/producer_bloc.dart';
+import '../features/new_producer/bloc/new_producer_bloc.dart';
 import '../features/new_producer/widgets/new_producer_button.dart';
 import '../widgets/producer_list.dart';
 
@@ -28,20 +29,34 @@ class _ProducersPageState extends State<ProducersPage> {
       navTab: AuthNavTab.producers,
       page: Align(
         alignment: Alignment.topCenter,
-        child: BlocProvider<ProducerBloc>(
-          create: (context) => di<ProducerBloc>()..add(LoadProducersEvent()),
-          child: BlocBuilder<ProducerBloc, ProducerState>(
-            builder: (context, state) {
-              if (state is ProducerLoading) {
-                return _buildLoadingContent();
-              } else if (state is ProducerLoaded) {
-                return _buildMainContent(context, isMobile, state.producers);
-              } else if (state is ProducerError) {
-                return _buildErrorContent(state.errorMessage);
-              } else {
-                return _buildInitialContent();
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<ProducerBloc>(
+              create: (context) => di<ProducerBloc>()..add(LoadProducersEvent()),
+            ),
+            BlocProvider<NewProducerBloc>(
+              create: (context) => di<NewProducerBloc>(),
+            ),
+          ],
+          child: BlocListener<NewProducerBloc, NewProducerState>(
+            listener: (context, state) {
+              if (state.status == NewProducerStatus.success) {
+                context.read<ProducerBloc>().add(LoadProducersEvent());
               }
             },
+            child: BlocBuilder<ProducerBloc, ProducerState>(
+              builder: (context, state) {
+                if (state is ProducerLoading) {
+                  return _buildLoadingContent();
+                } else if (state is ProducerLoaded) {
+                  return _buildMainContent(context, isMobile, state.producers);
+                } else if (state is ProducerError) {
+                  return _buildErrorContent(state.errorMessage);
+                } else {
+                  return _buildInitialContent();
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -63,7 +78,9 @@ class _ProducersPageState extends State<ProducersPage> {
             Positioned(
               bottom: 16,
               right: 16,
-              child: NewProducerButton(),
+              child: NewProducerButton(
+                producerBloc: context.read<ProducerBloc>(),
+              ),
             ),
         ],
       ),

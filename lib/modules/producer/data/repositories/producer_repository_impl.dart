@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../_core/error/failures.dart';
 import '../../domain/entities/producer_entity.dart';
 import '../../domain/repositories/producer_repository.dart';
-import '../models/producer_model.dart';
+import '../dto/new_producer_dto.dart';
 import '../sources/producer_remote_source.dart';
 
 class ProducerRepositoryImpl implements ProducerRepository {
@@ -15,6 +15,7 @@ class ProducerRepositoryImpl implements ProducerRepository {
   Future<Either<Failure, List<ProducerEntity>>> getProducers() async {
     try {
       final producerModels = await remoteSource.getProducers();
+
       final producerEntities = producerModels
           .map((model) => ProducerEntity(
                 id: model.id,
@@ -23,6 +24,7 @@ class ProducerRepositoryImpl implements ProducerRepository {
                 region: model.region,
               ))
           .toList();
+
       return Right(producerEntities);
     } catch (e) {
       return Left(ServerFailure());
@@ -30,22 +32,20 @@ class ProducerRepositoryImpl implements ProducerRepository {
   }
 
   @override
-  @override
-  Future<Either<Failure, ProducerEntity>> addProducer(ProducerEntity producer) async {
+  Future<Either<Failure, void>> addProducer(NewProducerDto producer) async {
     try {
-      final newProducerModel = ProducerModel.fromJson({
-        "name": producer.name,
-        "regionId": producer.regionId,
-      });
+      await remoteSource.addProducer(producer);
+      return const Right(null);
+    } catch (e) {
+      return Left(ServerFailure());
+    }
+  }
 
-      final producerModel = await remoteSource.addProducer(newProducerModel);
-      final producerEntity = ProducerEntity(
-        id: producerModel.id,
-        name: producerModel.name,
-        regionId: producerModel.regionId,
-        region: producerModel.region,
-      );
-      return Right(producerEntity);
+  @override
+  Future<Either<Failure, void>> deleteProducer(String producerId) async {
+    try {
+      await remoteSource.deleteProducer(producerId);
+      return const Right(null);
     } catch (e) {
       return Left(ServerFailure());
     }

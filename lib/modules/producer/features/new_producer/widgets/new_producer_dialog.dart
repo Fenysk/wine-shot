@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../_shared/domain/entities/region_entity.dart';
 import '../../../../../_shared/widgets/custom_dialog.dart';
 import '../../../bloc/producer_bloc.dart';
-import '../../../domain/entities/producer_entity.dart';
+import '../../../data/dto/new_producer_dto.dart';
 import '../bloc/new_producer_bloc.dart';
 import '../../../../region/features/region_list/bloc/region_bloc.dart';
 
@@ -30,19 +30,17 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
     if (_formKey.currentState?.validate() ?? false) {
       if (_selectedRegion == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Veuillez sélectionner une région')),
+          const SnackBar(content: Text('Veuillez sélectionner une région')),
         );
         return;
       }
 
-      final producer = ProducerEntity(
-        id: '', // Will be set by the server
+      final producerDto = NewProducerDto(
         name: _nameController.text,
         regionId: _selectedRegion!.id,
-        region: _selectedRegion!,
       );
 
-      context.read<NewProducerBloc>().add(AddProducerEvent(producer));
+      context.read<NewProducerBloc>().add(AddProducerEvent(producerDto));
     }
   }
 
@@ -70,7 +68,7 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
                 children: [
                   TextFormField(
                     controller: _nameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Nom du producteur',
                       border: OutlineInputBorder(),
                     ),
@@ -89,7 +87,7 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
                       } else if (state is RegionLoaded) {
                         final regions = state.regions;
                         return DropdownButtonFormField<RegionEntity>(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Région',
                             border: OutlineInputBorder(),
                           ),
@@ -113,7 +111,7 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
                           },
                         );
                       } else if (state is RegionError) {
-                        return Text(state.message, style: TextStyle(color: Colors.red));
+                        return Text(state.message, style: const TextStyle(color: Colors.red));
                       }
                       return const SizedBox.shrink();
                     },
@@ -124,7 +122,7 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('Annuler'),
+                child: const Text('Annuler'),
               ),
               FilledButton(
                 onPressed: state.status == NewProducerStatus.loading ? null : _submitForm,
@@ -134,7 +132,7 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
                         height: 20,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : Text('Ajouter'),
+                    : const Text('Ajouter'),
               ),
             ],
           );

@@ -8,3 +8,14 @@ sealed class ProducerEvent extends Equatable {
 }
 
 class LoadProducersEvent extends ProducerEvent {}
+
+class DeleteProducerEvent extends ProducerEvent {
+  final String producerId;
+
+  const DeleteProducerEvent(this.producerId);
+
+  @override
+  List<Object> get props => [
+        producerId
+      ];
+}

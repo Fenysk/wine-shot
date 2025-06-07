@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:dartz/dartz.dart';
 
 import '../../../../../_core/error/failures.dart';
-import '../../../domain/entities/producer_entity.dart';
 import '../../../domain/usecases/add_producer_usecase.dart';
+import '../../../data/dto/new_producer_dto.dart';
 
 part 'new_producer_event.dart';
 part 'new_producer_state.dart';
@@ -24,7 +23,7 @@ class NewProducerBloc extends Bloc<NewProducerEvent, NewProducerState> {
   ) async {
     emit(NewProducerState.loading());
 
-    final result = await _addProducerUsecase(event.producer);
+    final result = await _addProducerUsecase(event.producerDto);
 
     result.fold(
       (failure) => emit(NewProducerState.failure(
