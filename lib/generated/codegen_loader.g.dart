@@ -277,17 +277,14 @@ static const Map<String,dynamic> _fr = {
     "title": "Accueil",
     "hello": "Bonjour"
   },
-  "templatesPage": {
-    "title": "Templates",
-    "newTemplate": "Nouveau template",
-    "templateNameHint": "Nom du nouveau template...",
-    "emptyTemplateList": "Aucun template enregistré."
+  "producersPage": {
+    "title": "Producteurs"
   },
   "layoutPage": {
     "home": "Accueil",
     "profile": "Profil",
     "settings": "Paramètres",
-    "templates": "Templates",
+    "producers": "Producteurs",
     "statistics": "Statistiques",
     "logout": "Se Déconnecter",
     "changeLanguage": "Changer de Langue",

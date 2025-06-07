@@ -4,12 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../_core/app_router.dart';
 import '../../_core/layout/adaptive_layout/adaptive_destination.dart';
+import '../producer/producer_routes.dart';
 import 'features/login/page/login_page.dart';
 import 'features/profile/page/profile_page.dart';
 import 'features/register/page/register_page.dart';
 
 enum AuthNavTab implements NavTab {
-  templates,
+  producers,
   statistics,
   profile
 }
@@ -17,10 +18,10 @@ enum AuthNavTab implements NavTab {
 List<AdaptiveDestination> getAuthNavTabs(BuildContext context) {
   return <AdaptiveDestination>[
     AdaptiveDestination(
-      title: context.tr('layoutPage.templates'),
-      icon: Icons.folder,
-      route: '/templates',
-      navTab: AuthNavTab.templates,
+      title: context.tr('layoutPage.producers'),
+      icon: Icons.person_pin_circle,
+      route: ProducerRoutePaths.producers,
+      navTab: AuthNavTab.producers,
       order: 10,
     ),
     AdaptiveDestination(

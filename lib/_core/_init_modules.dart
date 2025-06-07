@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../_shared/shared_module.dart';
 import '../modules/auth/auth_module.dart';
-import '../modules/template/template_module.dart';
+import '../modules/producer/template_module.dart' as template_module;
 import 'constants.dart';
 import 'di.dart';
 import 'layout/adaptive_layout/adaptive_destination.dart';
@@ -12,7 +12,7 @@ class AppModules {
   static Future<void> initBeforeRunApp() async {
     await registerAuthModule();
     await registerSharedModule();
-    await registerTemplateModule();
+    await template_module.registerTemplateModule();
   }
 
   /// Initializes modules after the Flutter app has started (after `runApp()`), when BuildContext is available.

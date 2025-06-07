@@ -12,7 +12,7 @@ class EmailInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'email',
-      initialValue: 'test@test.com',
+      initialValue: 'alexisgailleton@icloud.com',
       keyboardType: TextInputType.emailAddress,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
