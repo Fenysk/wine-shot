@@ -1,12 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../../_shared/domain/entities/region_entity.dart';
 import '../../../../../_shared/widgets/custom_dialog.dart';
+import '../../../../../_shared/widgets/show_toast_notification.dart';
 import '../../../bloc/producer_bloc.dart';
 import '../../../data/dto/new_producer_dto.dart';
 import '../bloc/new_producer_bloc.dart';
-import '../../../../region/features/region_list/bloc/region_bloc.dart';
+
+import 'region_dropdown_field.dart';
+import 'producer_name_field.dart';
 
 class NewProducerDialog extends StatefulWidget {
   const NewProducerDialog({super.key});
@@ -16,7 +21,7 @@ class NewProducerDialog extends StatefulWidget {
 }
 
 class _NewProducerDialogState extends State<NewProducerDialog> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
   final _nameController = TextEditingController();
   RegionEntity? _selectedRegion;
 
@@ -27,13 +32,8 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
   }
 
   void _submitForm() {
-    if (_formKey.currentState?.validate() ?? false) {
-      if (_selectedRegion == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Veuillez sélectionner une région')),
-        );
-        return;
-      }
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
+      if (_selectedRegion == null) return;
 
       final producerDto = NewProducerDto(
         name: _nameController.text,
@@ -52,69 +52,26 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
           Navigator.of(context).pop();
           context.read<ProducerBloc>().add(LoadProducersEvent());
         } else if (state.status == NewProducerStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage ?? 'Une erreur est survenue')),
+          CustomToast.showErrorNotification(
+            title: 'Oups !',
+            description: state.errorMessage ?? 'Une erreur est survenue : ${state.errorMessage}',
           );
         }
       },
       child: BlocBuilder<NewProducerBloc, NewProducerState>(
         builder: (context, state) {
           return CustomDialog(
-            title: 'Nouveau producteur',
-            content: Form(
+            title: context.tr('producersPage.newProducerDialog.title'),
+            content: FormBuilder(
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Nom du producteur',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Veuillez entrer un nom';
-                      }
-                      return null;
-                    },
-                  ),
+                  ProducerNameField(controller: _nameController),
                   const SizedBox(height: 16),
-                  BlocBuilder<RegionBloc, RegionState>(
-                    builder: (context, state) {
-                      if (state is RegionLoading) {
-                        return const CircularProgressIndicator();
-                      } else if (state is RegionLoaded) {
-                        final regions = state.regions;
-                        return DropdownButtonFormField<RegionEntity>(
-                          decoration: const InputDecoration(
-                            labelText: 'Région',
-                            border: OutlineInputBorder(),
-                          ),
-                          value: regions.contains(_selectedRegion) ? _selectedRegion : null,
-                          items: regions.map<DropdownMenuItem<RegionEntity>>((region) {
-                            return DropdownMenuItem<RegionEntity>(
-                              value: region,
-                              child: Text(region.name),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedRegion = value;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Veuillez sélectionner une région';
-                            }
-                            return null;
-                          },
-                        );
-                      } else if (state is RegionError) {
-                        return Text(state.message, style: const TextStyle(color: Colors.red));
-                      }
-                      return const SizedBox.shrink();
-                    },
+                  RegionDropdownField(
+                    selectedRegion: _selectedRegion,
+                    onChanged: _updateSelectRegion,
                   ),
                 ],
               ),
@@ -122,7 +79,7 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Annuler'),
+                child: Text(context.tr('common.cancel')),
               ),
               FilledButton(
                 onPressed: state.status == NewProducerStatus.loading ? null : _submitForm,
@@ -132,12 +89,16 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
                         height: 20,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Ajouter'),
+                    : Text(context.tr('common.save')),
               ),
             ],
           );
         },
       ),
     );
+  }
+
+  void _updateSelectRegion(RegionEntity? value) {
+    setState(() => _selectedRegion = value);
   }
 }

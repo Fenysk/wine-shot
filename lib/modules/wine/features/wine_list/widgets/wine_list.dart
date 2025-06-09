@@ -31,11 +31,12 @@ class WineList extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: FloatingActionButton(
+                      child: TextButton.icon(
                         onPressed: () {
                           // Add new wine functionality
                         },
-                        child: const Icon(Icons.add),
+                        icon: const Icon(Icons.add),
+                        label: const Text('Add Wine'),
                       ),
                     ),
                   ],

@@ -34,7 +34,18 @@
     "hello": "Bonjour"
   },
   "producersPage": {
-    "title": "Producteurs"
+    "title": "Producteurs",
+    "newProducerDialog": {
+      "title": "Nouveau Producteur",
+      "producerNameField": {
+        "label": "Nom du producteur",
+        "validator": "Veuillez entrer un nom"
+      },
+      "regionDropdownField": {
+        "label": "Région",
+        "validator": "Veuillez sélectionner une région"
+      }
+    }
   },
   "layoutPage": {
     "home": "Accueil",

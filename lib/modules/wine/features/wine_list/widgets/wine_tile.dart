@@ -17,11 +17,17 @@ class WineTile extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (wine.producer != null) Text(wine.producer!.name),
-          if (wine.region != null) Text(wine.region!.name),
+          if (wine.producer != null || wine.region != null)
+            Row(
+              children: [
+                if (wine.producer != null) Text(wine.producer!.name),
+                if (wine.producer != null && wine.region != null) const Text(' · '),
+                if (wine.region != null) Text(wine.region!.name),
+              ],
+            ),
+          if (wine.wineType != null) Text(wine.wineType!.label),
         ],
       ),
-      trailing: Text('${wine.alcoholPercentage ?? 0}%'),
     );
   }
 }
