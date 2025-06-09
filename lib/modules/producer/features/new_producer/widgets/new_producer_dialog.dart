@@ -10,7 +10,7 @@ import '../../../bloc/producer_bloc.dart';
 import '../../../data/dto/new_producer_dto.dart';
 import '../bloc/new_producer_bloc.dart';
 
-import 'region_dropdown_field.dart';
+import '../../../../region/features/region_list/widgets/region_dropdown_field.dart';
 import 'producer_name_field.dart';
 
 class NewProducerDialog extends StatefulWidget {
@@ -23,6 +23,7 @@ class NewProducerDialog extends StatefulWidget {
 class _NewProducerDialogState extends State<NewProducerDialog> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _nameController = TextEditingController();
+
   RegionEntity? _selectedRegion;
 
   @override

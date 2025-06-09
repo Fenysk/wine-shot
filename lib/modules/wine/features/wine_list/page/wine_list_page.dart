@@ -7,9 +7,10 @@ import '../../../../../_core/layout/page_layout.dart';
 import '../../../../auth/auth_routes.dart';
 import '../../../../region/region_module.dart';
 import '../../../domain/entities/wine_entity.dart';
-import '../bloc/wine_list_bloc.dart';
-import '../bloc/wine_list_event.dart';
-import '../bloc/wine_list_state.dart';
+import '../../new_wine/widgets/new_wine_button.dart';
+import '../bloc/wine-list/wine_list_bloc.dart';
+import '../bloc/wine-list/wine_list_event.dart';
+import '../bloc/wine-list/wine_list_state.dart';
 import '../widgets/wine_list.dart';
 
 class WineListPage extends StatefulWidget {
@@ -64,12 +65,7 @@ class _WineListPageState extends State<WineListPage> {
             Positioned(
               bottom: 16,
               right: 16,
-              child: FloatingActionButton(
-                onPressed: () {
-                  // Add new wine functionality
-                },
-                child: const Icon(Icons.add),
-              ),
+              child: NewWineButton(wineListBloc: context.read<WineListBloc>()),
             ),
         ],
       ),

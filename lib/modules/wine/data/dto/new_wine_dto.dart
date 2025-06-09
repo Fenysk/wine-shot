@@ -17,22 +17,22 @@ class NewWineDto {
   final String? description;
 
   @JsonKey(name: 'producer_id')
-  final String producerId;
+  final String? producerId;
 
   @JsonKey(name: 'region_id')
-  final String regionId;
+  final String? regionId;
 
   @JsonKey(name: 'wine_type_id')
-  final String wineTypeId;
+  final String? wineTypeId;
 
   const NewWineDto({
     required this.name,
     this.alcoholPercentage,
     this.volume,
     this.description,
-    required this.producerId,
-    required this.regionId,
-    required this.wineTypeId,
+    this.producerId,
+    this.regionId,
+    this.wineTypeId,
   });
 
   factory NewWineDto.fromJson(Map<String, dynamic> json) => _$NewWineDtoFromJson(json);

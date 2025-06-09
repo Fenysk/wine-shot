@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../../_shared/widgets/custom_card.dart';
 import '../../../domain/entities/wine_entity.dart';
+import '../../new_wine/widgets/new_wine_button.dart';
+import '../bloc/wine-list/wine_list_bloc.dart';
 import 'wine_tile.dart';
 
 class WineList extends StatelessWidget {
@@ -31,12 +34,8 @@ class WineList extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: TextButton.icon(
-                        onPressed: () {
-                          // Add new wine functionality
-                        },
-                        icon: const Icon(Icons.add),
-                        label: const Text('Add Wine'),
+                      child: NewWineButton(
+                        wineListBloc: context.read<WineListBloc>(),
                       ),
                     ),
                   ],

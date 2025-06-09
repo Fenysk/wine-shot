@@ -73,8 +73,13 @@ class WineRemoteSourceImpl implements WineRemoteSource {
 
   @override
   Future<WineEntity> createWine(NewWineDto wine) async {
-    final response = await SupabaseConfig.client.from('wines').insert(wine.toJson()).select().single();
-    return WineModel.fromJson(response);
+    try {
+      final response = await SupabaseConfig.client.from('wines').insert(wine.toJson()).select().single();
+      return WineModel.fromJson(response);
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
   }
 
   @override

@@ -72,7 +72,8 @@ class WineRepositoryImpl implements WineRepository {
     try {
       final result = await remoteSource.createWine(wine);
       return Right(result);
-    } catch (e) {
+    } catch (error) {
+      print(error);
       return Left(ServerFailure());
     }
   }

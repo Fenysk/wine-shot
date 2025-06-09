@@ -11,9 +11,9 @@ NewWineDto _$NewWineDtoFromJson(Map<String, dynamic> json) => NewWineDto(
       alcoholPercentage: (json['alcohol_percentage'] as num?)?.toDouble(),
       volume: (json['volume'] as num?)?.toInt(),
       description: json['description'] as String?,
-      producerId: json['producer_id'] as String,
-      regionId: json['region_id'] as String,
-      wineTypeId: json['wine_type_id'] as String,
+      producerId: json['producer_id'] as String?,
+      regionId: json['region_id'] as String?,
+      wineTypeId: json['wine_type_id'] as String?,
     );
 
 Map<String, dynamic> _$NewWineDtoToJson(NewWineDto instance) =>

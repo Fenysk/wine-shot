@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../_core/usecases/usecase.dart';
-import '../../../domain/usecases/get_wines_usecase.dart';
+import '../../../../../../_core/usecases/usecase.dart';
+import '../../../../domain/usecases/get_wines_usecase.dart';
 import 'wine_list_event.dart';
 import 'wine_list_state.dart';
 

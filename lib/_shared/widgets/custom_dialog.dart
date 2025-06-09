@@ -4,19 +4,26 @@ class CustomDialog extends StatelessWidget {
   final String title;
   final Widget content;
   final List<Widget> actions;
+  final double minWidth;
+  final double maxWidth;
 
   const CustomDialog({
     super.key,
     required this.title,
     required this.content,
     required this.actions,
+    this.minWidth = 300,
+    this.maxWidth = 400,
   });
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 400),
+        constraints: BoxConstraints(
+          minWidth: minWidth,
+          maxWidth: maxWidth,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(

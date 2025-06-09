@@ -4,16 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../../../_shared/domain/entities/region_entity.dart';
-import '../../../../region/features/region_list/bloc/region_bloc.dart';
+import '../bloc/region_bloc.dart';
 
 class RegionDropdownField extends StatelessWidget {
   final RegionEntity? selectedRegion;
   final ValueChanged<RegionEntity?> onChanged;
+  final bool required;
 
   const RegionDropdownField({
     super.key,
     required this.selectedRegion,
     required this.onChanged,
+    this.required = true,
   });
 
   @override
@@ -27,7 +29,7 @@ class RegionDropdownField extends StatelessWidget {
           return FormBuilderDropdown<RegionEntity>(
             name: 'region_id',
             decoration: InputDecoration(
-              labelText: context.tr('producersPage.newProducerDialog.regionDropdownField.label'),
+              labelText: context.tr('regionsPage.newRegionDialog.regionNameField.label'),
               border: OutlineInputBorder(),
             ),
             initialValue: regions.contains(selectedRegion) ? selectedRegion : null,
@@ -39,8 +41,8 @@ class RegionDropdownField extends StatelessWidget {
             }).toList(),
             onChanged: onChanged,
             validator: (value) {
-              if (value == null) {
-                return context.tr('producersPage.newProducerDialog.regionDropdownField.validator');
+              if (required && value == null) {
+                return context.tr('regionsPage.newRegionDialog.regionNameField.validator');
               }
               return null;
             },

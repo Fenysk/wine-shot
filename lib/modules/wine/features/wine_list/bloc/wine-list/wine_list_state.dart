@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../domain/entities/wine_entity.dart';
+import '../../../../domain/entities/wine_entity.dart';
 
 abstract class WineListState extends Equatable {
   const WineListState();

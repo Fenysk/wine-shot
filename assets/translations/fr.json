@@ -2,6 +2,7 @@
   "common": {
     "cancel": "Annuler",
     "create": "Créer",
+    "save": "Enregistrer",
     "requiredField": "Ce champ est requis"
   },
   "loginPage": {
@@ -60,6 +61,16 @@
   "profilePage": {
     "title": "Profil"
   },
+  "regionsPage": {
+    "title": "Régions",
+    "newRegionDialog": {
+      "title": "Nouvelle Région",
+      "regionNameField": {
+        "label": "Nom de la région",
+        "validator": "Veuillez entrer un nom"
+      }
+    }
+  },
   "landingPage": {
     "welcomeTo": "Bienvenue sur",
     "cleanStarter": "Clean Starter",
@@ -77,5 +88,44 @@
     "viewOnGithub": "Voir sur GitHub",
     "paragraph3": "Nous accueillons toutes les contributions !\nFork le repo, faites des changements et soumettez une demande de pull.",
     "contributionsWelcome": "🤝 Contributions Bienvenues"
+  },
+  "winesPage": {
+    "newWineDialog": {
+      "title": "Nouveau Vin",
+      "wineNameField": {
+        "label": "Nom du vin",
+        "validator": "Veuillez entrer un nom"
+      },
+      "alcoholPercentageField": {
+        "label": "Alcool",
+        "validator": {
+          "empty": "Veuillez noter le pourcentage d'alcool",
+          "invalid": "Ce pourcentage d'alcool n'est pas valide"
+        }
+      },
+      "volumeField": {
+        "label": "Volume",
+        "validator": {
+          "empty": "Veuillez entrer un volume",
+          "invalid": "Veuillez entrer un volume valide"
+        }
+      },
+      "descriptionField": {
+        "label": "Description",
+        "validator": "Veuillez entrer une description"
+      },
+      "producerDropdownField": {
+        "label": "Producteur",
+        "validator": "Veuillez sélectionner un producteur"
+      },
+      "wineTypeDropdownField": {
+        "label": "Type de vin",
+        "validator": "Veuillez sélectionner un type de vin"
+      },
+      "regionDropdownField": {
+        "label": "Région",
+        "validator": "Veuillez sélectionner une région"
+      }
+    }
   }
 }

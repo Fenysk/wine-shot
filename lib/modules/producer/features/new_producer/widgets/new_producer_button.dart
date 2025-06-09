@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,7 @@ class NewProducerButton extends StatelessWidget {
         : TextButton.icon(
             onPressed: () => showNewProducerDialog(context),
             icon: const Icon(Icons.add),
-            label: const Text("Nouveau producteur"),
+            label: Text(context.tr("producersPage.newProducerDialog.title")),
           );
   }
 
