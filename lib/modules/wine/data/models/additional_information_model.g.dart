@@ -1,41 +1,36 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'producer_model.dart';
+part of 'additional_information_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ProducerModelAdapter extends TypeAdapter<ProducerModel> {
+class AdditionalInformationModelAdapter
+    extends TypeAdapter<AdditionalInformationModel> {
   @override
-  final int typeId = 2;
+  final int typeId = 6;
 
   @override
-  ProducerModel read(BinaryReader reader) {
+  AdditionalInformationModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ProducerModel(
+    return AdditionalInformationModel(
       id: fields[0] as String,
-      name: fields[1] as String,
-      regionId: fields[2] as String,
-      region: fields[3] as RegionModel?,
+      label: fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ProducerModel obj) {
+  void write(BinaryWriter writer, AdditionalInformationModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name)
-      ..writeByte(2)
-      ..write(obj.regionId)
-      ..writeByte(3)
-      ..write(obj.region);
+      ..write(obj.label);
   }
 
   @override
@@ -44,7 +39,7 @@ class ProducerModelAdapter extends TypeAdapter<ProducerModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ProducerModelAdapter &&
+      other is AdditionalInformationModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -53,12 +48,9 @@ class ProducerModelAdapter extends TypeAdapter<ProducerModel> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProducerModel _$ProducerModelFromJson(Map<String, dynamic> json) =>
-    ProducerModel(
+AdditionalInformationModel _$AdditionalInformationModelFromJson(
+        Map<String, dynamic> json) =>
+    AdditionalInformationModel(
       id: json['id'] as String,
-      name: json['name'] as String,
-      regionId: json['region_id'] as String,
-      region: json['region'] == null
-          ? null
-          : RegionModel.fromJson(json['region'] as Map<String, dynamic>),
+      label: json['label'] as String,
     );

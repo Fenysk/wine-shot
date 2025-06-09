@@ -46,9 +46,13 @@ class ProducerList extends StatelessWidget {
                     itemCount: producers.length,
                     itemBuilder: (context, index) {
                       final producer = producers[index];
+                      if (producer.region == null) {
+                        return const SizedBox.shrink();
+                      }
+
                       return ListTile(
                         title: Text(producer.name),
-                        subtitle: Text(producer.region.name),
+                        subtitle: Text(producer.region!.name),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _showDeleteConfirmationDialog(context, producer.id),

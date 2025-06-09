@@ -16,5 +16,6 @@ class NewProducerDto {
   });
 
   factory NewProducerDto.fromJson(Map<String, dynamic> json) => _$NewProducerDtoFromJson(json);
+
   Map<String, dynamic> toJson() => _$NewProducerDtoToJson(this);
 }

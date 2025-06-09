@@ -11,8 +11,8 @@ import 'features/register/page/register_page.dart';
 
 enum AuthNavTab implements NavTab {
   producers,
-  statistics,
-  profile
+  profile,
+  wines,
 }
 
 List<AdaptiveDestination> getAuthNavTabs(BuildContext context) {
@@ -25,11 +25,11 @@ List<AdaptiveDestination> getAuthNavTabs(BuildContext context) {
       order: 10,
     ),
     AdaptiveDestination(
-      title: context.tr('layoutPage.statistics'),
-      icon: Icons.bar_chart,
-      route: '/statistics',
-      navTab: AuthNavTab.statistics,
-      order: 20,
+      title: context.tr('layoutPage.wines'),
+      icon: Icons.wine_bar,
+      route: '/wines',
+      navTab: AuthNavTab.wines,
+      order: 30,
     ),
     AdaptiveDestination(
       title: context.tr('layoutPage.profile'),

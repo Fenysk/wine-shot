@@ -4,6 +4,7 @@ import '../_shared/shared_module.dart';
 import '../modules/auth/auth_module.dart';
 import '../modules/region/region_module.dart';
 import '../modules/producer/producer_module.dart';
+import '../modules/wine/wine_module.dart';
 import 'constants.dart';
 import 'di.dart' as di;
 import 'layout/adaptive_layout/adaptive_destination.dart';
@@ -15,6 +16,7 @@ class AppModules {
     await registerSharedModule();
     await registerRegionModule();
     await registerProducerModule();
+    await registerWineModule();
   }
 
   /// Initializes modules after the Flutter app has started (after `runApp()`), when BuildContext is available.

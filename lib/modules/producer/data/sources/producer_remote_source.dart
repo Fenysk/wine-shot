@@ -13,19 +13,10 @@ class ProducerRemoteSourceImpl implements ProducerRemoteSource {
   Future<List<ProducerModel>> getProducers() async {
     final response = await SupabaseConfig.client.from('producers').select('''
       *,
-      regions (*)
+      region:regions (*)
     ''');
 
-    final producers = (response as List).map((producer) {
-      final producerData = Map<String, dynamic>.from(producer);
-      final regionData = producerData['regions'] as Map<String, dynamic>?;
-
-      if (regionData != null) {
-        producerData['region'] = regionData;
-      }
-
-      return ProducerModel.fromJson(producerData);
-    }).toList();
+    final producers = (response as List).map((producer) => ProducerModel.fromJson(producer as Map<String, dynamic>)).toList();
 
     return producers;
   }

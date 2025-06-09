@@ -8,7 +8,7 @@ import '../../domain/entities/producer_entity.dart';
 
 part 'producer_model.g.dart';
 
-@HiveType(typeId: 2) // Assurez-vous que typeId est unique
+@HiveType(typeId: 2)
 @JsonSerializable(createToJson: false)
 class ProducerModel extends ProducerEntity {
   @override
@@ -29,14 +29,19 @@ class ProducerModel extends ProducerEntity {
   @override
   @HiveField(3)
   @JsonKey(name: 'region')
-  final RegionModel region;
+  final RegionModel? region;
 
   const ProducerModel({
     required this.id,
     required this.name,
     required this.regionId,
-    required this.region,
-  }) : super(id: id, name: name, regionId: regionId, region: region);
+    this.region,
+  }) : super(
+          id: id,
+          name: name,
+          regionId: regionId,
+          region: region,
+        );
 
   factory ProducerModel.fromJson(Map<String, dynamic> json) => _$ProducerModelFromJson(json);
 }
