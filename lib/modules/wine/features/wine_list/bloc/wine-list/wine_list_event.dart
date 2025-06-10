@@ -10,3 +10,14 @@ abstract class WineListEvent extends Equatable {
 class LoadWinesEvent extends WineListEvent {
   const LoadWinesEvent();
 }
+
+class DeleteWineEvent extends WineListEvent {
+  final String wineId;
+
+  const DeleteWineEvent({required this.wineId});
+
+  @override
+  List<Object?> get props => [
+        wineId
+      ];
+}

@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../_core/di.dart';
@@ -19,10 +21,18 @@ class NewWineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () => showNewWineDialog(context),
-      child: const Icon(Icons.add),
-    );
+    bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
+    return isMobile
+        ? FloatingActionButton(
+            onPressed: () => showNewWineDialog(context),
+            child: const Icon(Icons.add),
+          )
+        : TextButton.icon(
+            onPressed: () => showNewWineDialog(context),
+            icon: const Icon(Icons.add),
+            label: Text(context.tr("winesPage.newWineDialog.title")),
+          );
   }
 
   void showNewWineDialog(BuildContext context) {

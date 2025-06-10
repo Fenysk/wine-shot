@@ -51,8 +51,16 @@ class ProducerList extends StatelessWidget {
                       }
 
                       return ListTile(
-                        title: Text(producer.name),
-                        subtitle: Text(producer.region!.name),
+                        title: Text(
+                          producer.name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        subtitle: Text(
+                          producer.region!.name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _showDeleteConfirmationDialog(context, producer.id),

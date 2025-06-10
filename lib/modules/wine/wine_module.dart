@@ -8,6 +8,7 @@ import 'data/repositories/wine_repository_impl.dart';
 import 'data/sources/wine_remote_source.dart';
 import 'domain/repositories/wine_repository.dart';
 import 'domain/usecases/create_wine_usecase.dart';
+import 'domain/usecases/delete_wine_usecase.dart';
 import 'domain/usecases/get_wine_types_usecase.dart';
 import 'domain/usecases/get_wines_usecase.dart';
 import 'features/new_wine/bloc/new_wine_bloc.dart';
@@ -28,9 +29,13 @@ Future<void> registerWineModule() async {
   di.registerLazySingleton(() => GetWinesUseCase(repository: di()));
   di.registerLazySingleton(() => GetWineTypesUseCase(repository: di()));
   di.registerLazySingleton(() => CreateWineUseCase(repository: di()));
+  di.registerLazySingleton(() => DeleteWineUseCase(repository: di()));
 
   // Bloc
-  di.registerFactory<WineListBloc>(() => WineListBloc(getWinesUseCase: di()));
+  di.registerFactory<WineListBloc>(() => WineListBloc(
+        getWinesUseCase: di(),
+        deleteWineUseCase: di(),
+      ));
   di.registerFactory<WineTypesListBloc>(() => WineTypesListBloc(getWineTypesUseCase: di()));
   di.registerFactory<NewWineBloc>(() => NewWineBloc(createWineUsecase: di()));
 
