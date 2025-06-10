@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'inventory_tab.dart';
+import '../features/stock_list/views/inventory_tab.dart';
 
 class StocksTabView extends StatefulWidget {
   const StocksTabView({super.key});
@@ -40,9 +40,9 @@ class _StocksTabViewState extends State<StocksTabView> with SingleTickerProvider
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: [
-              const InventoryTab(),
-              Center(child: Text(context.tr('stocksTabView.movementsContent'))),
+            children: const [
+              InventoryTab(),
+              Center(child: Text('Movements content')), // TODO: Implement MovementsTab
             ],
           ),
         ),

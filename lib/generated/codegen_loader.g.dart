@@ -417,6 +417,19 @@ static const Map<String,dynamic> _fr = {
   "producerList": {
     "showInList": "Afficher en liste",
     "showInGrid": "Afficher en grille"
+  },
+  "wine": {
+    "name": "Nom du vin",
+    "unknown": "Vin inconnu"
+  },
+  "stock": {
+    "quantity": "Quantité",
+    "packaging": "Conditionnement",
+    "location": "Emplacement",
+    "delete": {
+      "title": "Supprimer le stock",
+      "confirmation": "Êtes-vous sûr de vouloir supprimer ce stock ?"
+    }
   }
 };
 static const Map<String,dynamic> _zh = {
