@@ -1,3 +1,4 @@
+import 'package:clean_starter/modules/region/data/models/new_region_dto.dart';
 import 'package:dartz/dartz.dart';
 import '../../../../_core/error/failures.dart';
 import '../../../../_shared/domain/entities/region_entity.dart';
@@ -13,6 +14,16 @@ class RegionRepositoryImpl implements RegionRepository {
     try {
       final models = await remoteSource.getRegions();
       return Right(models);
+    } catch (e) {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, RegionEntity>> createRegion(NewRegionDto dto) async {
+    try {
+      final newRegion = await remoteSource.createRegion(dto);
+      return Right(newRegion);
     } catch (e) {
       return Left(ServerFailure());
     }

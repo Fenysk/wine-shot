@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
+import '../../../../../shared/widgets/custom_dropdown_field.dart';
 import '../../../domain/entities/wine_type_entity.dart';
 import '../bloc/wine-types-list/wine_types_list_bloc.dart';
 
@@ -26,25 +27,24 @@ class WineTypesDropdownField extends StatelessWidget {
           return const CircularProgressIndicator();
         } else if (state is WineTypesListLoaded) {
           final wineTypes = state.wineTypes;
-          return FormBuilderDropdown<WineTypeEntity>(
+          return FormBuilderField<WineTypeEntity>(
             name: 'wine_type_id',
-            decoration: InputDecoration(
-              labelText: context.tr('wineTypesPage.newWineTypeDialog.wineTypeNameField.label'),
-              border: OutlineInputBorder(),
-            ),
             initialValue: wineTypes.contains(selectedWineType) ? selectedWineType : null,
-            items: wineTypes.map<DropdownMenuItem<WineTypeEntity>>((wineType) {
-              return DropdownMenuItem<WineTypeEntity>(
-                value: wineType,
-                child: Text(wineType.label),
-              );
-            }).toList(),
-            onChanged: onChanged,
             validator: (value) {
               if (required && value == null) {
                 return context.tr('wineTypesPage.newWineTypeDialog.wineTypeNameField.validator');
               }
               return null;
+            },
+            builder: (FormFieldState<WineTypeEntity> field) {
+              return CustomDropdownField<WineTypeEntity>(
+                initialValue: field.value,
+                items: wineTypes,
+                itemLabelBuilder: (wineType) => wineType.label,
+                label: context.tr('wineTypesPage.newWineTypeDialog.wineTypeNameField.label'),
+                searchHint: context.tr('common.dropdown.searchPlaceholder'),
+                emptyText: context.tr('common.dropdown.noResults'),
+              );
             },
           );
         } else if (state is WineTypesListError) {

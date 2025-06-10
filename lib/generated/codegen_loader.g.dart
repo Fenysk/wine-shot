@@ -247,7 +247,19 @@ static const Map<String,dynamic> _fr = {
     "cancel": "Annuler",
     "create": "Créer",
     "save": "Enregistrer",
-    "requiredField": "Ce champ est requis"
+    "requiredField": "Ce champ est requis",
+    "search": "Rechercher...",
+    "noResults": "Aucun résultat trouvé",
+    "selectAnOption": "Sélectionner une option",
+    "dropdown": {
+      "searchPlaceholder": "Rechercher...",
+      "noResults": "Aucun résultat trouvé",
+      "selectAnOption": "Sélectionner une option",
+      "required": "Ce champ est requis",
+      "search": "Rechercher...",
+      "cancel": "Annuler",
+      "close": "Fermer"
+    }
   },
   "loginPage": {
     "signIn": "Se Connecter",
@@ -289,6 +301,9 @@ static const Map<String,dynamic> _fr = {
       "regionDropdownField": {
         "label": "Région",
         "validator": "Veuillez sélectionner une région"
+      },
+      "producerDropdownField": {
+        "label": "Producteur"
       }
     }
   },
@@ -369,6 +384,13 @@ static const Map<String,dynamic> _fr = {
       "regionDropdownField": {
         "label": "Région",
         "validator": "Veuillez sélectionner une région"
+      }
+    }
+  },
+  "wineTypesPage": {
+    "newWineTypeDialog": {
+      "wineTypeNameField": {
+        "label": "Type de vin"
       }
     }
   }

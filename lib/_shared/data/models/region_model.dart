@@ -7,7 +7,7 @@ import '../../domain/entities/region_entity.dart';
 
 part 'region_model.g.dart';
 
-@HiveType(typeId: 1) // Assurez-vous que typeId est unique
+@HiveType(typeId: 1)
 @JsonSerializable(createToJson: false)
 class RegionModel extends RegionEntity {
   @override
