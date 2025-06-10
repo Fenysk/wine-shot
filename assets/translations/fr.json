@@ -186,5 +186,101 @@
       "title": "Supprimer le stock",
       "confirmation": "Êtes-vous sûr de vouloir supprimer ce stock ?"
     }
+  },
+  "movement": {
+    "label": {
+      "type": "Type de mouvement",
+      "date": "Date"
+    },
+    "new": {
+      "title": "Nouveau mouvement",
+      "content": "Formulaire de nouveau mouvement à implémenter",
+      "button": "Ajouter un mouvement"
+    },
+    "type": {
+      "entry": "Entrée",
+      "exit": "Sortie",
+      "transform": "Transformation",
+      "inventory": "Inventaire",
+      "transfer": "Transfert"
+    },
+    "notes": "Notes",
+    "fromPackaging": "Conditionnement source",
+    "toPackaging": "Conditionnement destination",
+    "quantity": "Quantité",
+    "wine": "Vin",
+    "location": "Emplacement",
+    "date": "Date",
+    "delete": {
+      "title": "Supprimer le mouvement",
+      "confirmation": "Êtes-vous sûr de vouloir supprimer ce mouvement ?"
+    },
+    "fromLocation": "Emplacement source",
+    "toLocation": "Emplacement destination",
+    "table": {
+      "wine": "Vin",
+      "type": "Type",
+      "packaging": "Conditionnement",
+      "fromLocation": "De",
+      "toLocation": "À",
+      "quantity": "Quantité",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "empty": "Aucun mouvement trouvé",
+    "error": "Erreur lors du chargement des mouvements"
+  },
+  "inventory": {
+    "table": {
+      "wine": "Vin",
+      "packaging": "Conditionnement",
+      "location": "Emplacement",
+      "quantity": "Quantité",
+      "actions": "Actions"
+    },
+    "empty": "Aucun stock trouvé.",
+    "error": "Erreur lors du chargement de l'inventaire.",
+    "add": "Ajouter un stock",
+    "edit": "Modifier le stock",
+    "delete": "Supprimer le stock",
+    "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce stock ?"
+  },
+  "movements": {
+    "table": {
+      "date": "Date",
+      "type": "Type",
+      "wine": "Vin",
+      "quantity": "Quantité",
+      "fromLocation": "De",
+      "toLocation": "À",
+      "notes": "Notes",
+      "actions": "Actions"
+    },
+    "empty": "Aucun mouvement trouvé.",
+    "error": "Erreur lors du chargement des mouvements.",
+    "add": "Ajouter un mouvement",
+    "edit": "Modifier le mouvement",
+    "delete": "Supprimer le mouvement",
+    "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce mouvement ?",
+    "form": {
+      "title": "Nouveau mouvement",
+      "type": "Type de mouvement",
+      "date": "Date",
+      "wine": "Vin",
+      "quantity": "Quantité",
+      "fromLocation": "Emplacement source",
+      "toLocation": "Emplacement destination",
+      "notes": "Notes",
+      "submit": "Enregistrer",
+      "cancel": "Annuler",
+      "validation": {
+        "type": "Veuillez sélectionner un type de mouvement",
+        "date": "Veuillez sélectionner une date",
+        "wine": "Veuillez sélectionner un vin",
+        "quantity": "Veuillez entrer une quantité",
+        "fromLocation": "Veuillez sélectionner un emplacement source",
+        "toLocation": "Veuillez sélectionner un emplacement destination"
+      }
+    }
   }
 }

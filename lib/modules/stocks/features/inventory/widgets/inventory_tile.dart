@@ -3,29 +3,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../../../domain/entities/wine_stock_entity.dart';
-import '../bloc/stocks_list_bloc.dart';
+import '../bloc/inventory_bloc.dart';
 
-enum StockTileDisplayType {
+enum InventoryTileDisplayType {
   card,
   tile
 }
 
-class StockTile extends StatelessWidget {
-  const StockTile({
+class InventoryTile extends StatelessWidget {
+  const InventoryTile({
     super.key,
-    required this.stock,
-    this.displayType = StockTileDisplayType.card,
+    required this.item,
+    this.displayType = InventoryTileDisplayType.card,
   });
 
-  final WineStockEntity stock;
-  final StockTileDisplayType displayType;
+  final WineStockEntity item;
+  final InventoryTileDisplayType displayType;
 
   @override
   Widget build(BuildContext context) {
     switch (displayType) {
-      case StockTileDisplayType.card:
+      case InventoryTileDisplayType.card:
         return _buildCard(context);
-      case StockTileDisplayType.tile:
+      case InventoryTileDisplayType.tile:
         return _buildTile(context);
     }
   }
@@ -42,27 +42,27 @@ class StockTile extends StatelessWidget {
               spacing: 4.0,
               children: [
                 Text(
-                  stock.wine?.name ?? context.tr('wine.unknown'),
+                  item.wine?.name ?? context.tr('wine.unknown'),
                   style: Theme.of(context).textTheme.titleMedium,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
-                if (stock.packaging != null)
+                if (item.packaging != null)
                   Text(
-                    stock.packaging!.label,
+                    item.packaging!.label,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                if (stock.location != null)
+                if (item.location != null)
                   Text(
-                    stock.location!.name,
+                    item.location!.name,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 Text(
-                  '${context.tr('stock.quantity')}: ${stock.quantity}',
+                  '${context.tr('inventory.quantity')}: ${item.quantity}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
@@ -89,7 +89,7 @@ class StockTile extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: ListTile(
         title: Text(
-          stock.wine?.name ?? context.tr('wine.unknown'),
+          item.wine?.name ?? context.tr('wine.unknown'),
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
@@ -97,20 +97,20 @@ class StockTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (stock.packaging != null)
+            if (item.packaging != null)
               Text(
-                stock.packaging!.label,
+                item.packaging!.label,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-            if (stock.location != null)
+            if (item.location != null)
               Text(
-                stock.location!.name,
+                item.location!.name,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
             Text(
-              '${context.tr('stock.quantity')}: ${stock.quantity}',
+              '${context.tr('inventory.quantity')}: ${item.quantity}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -129,8 +129,8 @@ class StockTile extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(context.tr('stock.delete.title')),
-        content: Text(context.tr('stock.delete.confirmation')),
+        title: Text(context.tr('inventory.delete.title')),
+        content: Text(context.tr('inventory.delete.confirmation')),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -138,7 +138,7 @@ class StockTile extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              context.read<StocksListBloc>().add(DeleteStockEvent(stockId: stock.id));
+              context.read<InventoryBloc>().add(DeleteInventoryEvent(itemStockId: item.id));
               Navigator.of(context).pop();
             },
             child: Text(

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../../_core/di.dart';
-import '../bloc/stocks_list_bloc.dart';
+import '../bloc/inventory_bloc.dart';
 import '../widgets/inventory_list.dart';
 import '../widgets/new_stock_button.dart';
 
@@ -20,15 +20,15 @@ class _InventoryTabState extends State<InventoryTab> {
   Widget build(BuildContext context) {
     bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
-    return BlocProvider<StocksListBloc>(
-      create: (context) => di<StocksListBloc>()..add(const LoadStocksEvent()),
-      child: BlocBuilder<StocksListBloc, StocksListState>(
+    return BlocProvider<InventoryBloc>(
+      create: (context) => di<InventoryBloc>()..add(const LoadInventoryEvent()),
+      child: BlocBuilder<InventoryBloc, InventoryState>(
         builder: (context, state) {
-          if (state is StockListLoading) {
+          if (state is InventoryLoading) {
             return _buildLoadingContent();
-          } else if (state is StockListLoaded) {
+          } else if (state is InventoryLoaded) {
             return _buildMainContent(context, isMobile, state);
-          } else if (state is StockListError) {
+          } else if (state is InventoryError) {
             return _buildErrorContent(state.errorMessage);
           } else {
             return _buildInitialContent();
@@ -38,7 +38,7 @@ class _InventoryTabState extends State<InventoryTab> {
     );
   }
 
-  Widget _buildMainContent(BuildContext context, bool isMobile, StockListLoaded state) {
+  Widget _buildMainContent(BuildContext context, bool isMobile, InventoryLoaded state) {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -46,8 +46,8 @@ class _InventoryTabState extends State<InventoryTab> {
         alignment: Alignment.topCenter,
         children: [
           InventoryList(
-            stocks: state.stocks,
-            onRefresh: () async => context.read<StocksListBloc>().add(const LoadStocksEvent()),
+            inventories: state.stocks,
+            onRefresh: () async => context.read<InventoryBloc>().add(const LoadInventoryEvent()),
           ),
           if (isMobile)
             Positioned(

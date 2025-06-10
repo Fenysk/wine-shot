@@ -35,53 +35,66 @@ class StockMovementModel extends StockMovement {
 
   @override
   @HiveField(4)
-  @JsonKey(name: 'location_id')
-  final String locationId;
+  @JsonKey(name: 'from_location_id')
+  final String? fromLocationId;
 
   @override
   @HiveField(5)
+  @JsonKey(name: 'to_location_id')
+  final String? toLocationId;
+
+  @override
+  @HiveField(6)
   @JsonKey(name: 'quantity')
   final int quantity;
 
   @override
-  @HiveField(6)
+  @HiveField(7)
   @JsonKey(name: 'movement_type')
   final StockMovementType movementType;
 
   @override
-  @HiveField(7)
+  @HiveField(8)
   @JsonKey(name: 'notes')
   final String? notes;
 
   @override
-  @HiveField(8)
+  @HiveField(9)
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
 
-  @HiveField(9)
+  @override
+  @HiveField(10)
   @JsonKey(name: 'wine')
   final WineModel? wine;
 
-  @HiveField(10)
+  @override
+  @HiveField(11)
   @JsonKey(name: 'from_packaging')
   final PackagingModel? fromPackaging;
 
-  @HiveField(11)
+  @override
+  @HiveField(12)
   @JsonKey(name: 'to_packaging')
   final PackagingModel? toPackaging;
 
-  @HiveField(12)
-  @JsonKey(name: 'location')
-  final LocationModel? location;
+  @override
+  @HiveField(13)
+  @JsonKey(name: 'from_location')
+  final LocationModel? fromLocation;
 
-  factory StockMovementModel.fromJson(Map<String, dynamic> json) => _$StockMovementModelFromJson(json);
+  @override
+  @HiveField(14)
+  @JsonKey(name: 'to_location')
+  final LocationModel? toLocation;
 
   const StockMovementModel({
     required this.id,
     required this.wineId,
     this.fromPackagingId,
     this.toPackagingId,
-    required this.locationId,
+    this.fromLocationId,
+    this.toLocationId,
     required this.quantity,
     required this.movementType,
     this.notes,
@@ -89,16 +102,25 @@ class StockMovementModel extends StockMovement {
     this.wine,
     this.fromPackaging,
     this.toPackaging,
-    this.location,
+    this.fromLocation,
+    this.toLocation,
   }) : super(
           id: id,
           wineId: wineId,
           fromPackagingId: fromPackagingId,
           toPackagingId: toPackagingId,
-          locationId: locationId,
+          fromLocationId: fromLocationId,
+          toLocationId: toLocationId,
           quantity: quantity,
           movementType: movementType,
           notes: notes,
           createdAt: createdAt,
+          wine: wine,
+          fromPackaging: fromPackaging,
+          toPackaging: toPackaging,
+          fromLocation: fromLocation,
+          toLocation: toLocation,
         );
+
+  factory StockMovementModel.fromJson(Map<String, dynamic> json) => _$StockMovementModelFromJson(json);
 }

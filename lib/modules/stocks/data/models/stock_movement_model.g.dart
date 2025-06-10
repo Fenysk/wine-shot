@@ -21,22 +21,24 @@ class StockMovementModelAdapter extends TypeAdapter<StockMovementModel> {
       wineId: fields[1] as String,
       fromPackagingId: fields[2] as String?,
       toPackagingId: fields[3] as String?,
-      locationId: fields[4] as String,
-      quantity: fields[5] as int,
-      movementType: fields[6] as StockMovementType,
-      notes: fields[7] as String?,
-      createdAt: fields[8] as DateTime?,
-      wine: fields[9] as WineModel?,
-      fromPackaging: fields[10] as PackagingModel?,
-      toPackaging: fields[11] as PackagingModel?,
-      location: fields[12] as LocationModel?,
+      fromLocationId: fields[4] as String?,
+      toLocationId: fields[5] as String?,
+      quantity: fields[6] as int,
+      movementType: fields[7] as StockMovementType,
+      notes: fields[8] as String?,
+      createdAt: fields[9] as DateTime?,
+      wine: fields[10] as WineModel?,
+      fromPackaging: fields[11] as PackagingModel?,
+      toPackaging: fields[12] as PackagingModel?,
+      fromLocation: fields[13] as LocationModel?,
+      toLocation: fields[14] as LocationModel?,
     );
   }
 
   @override
   void write(BinaryWriter writer, StockMovementModel obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -46,23 +48,27 @@ class StockMovementModelAdapter extends TypeAdapter<StockMovementModel> {
       ..writeByte(3)
       ..write(obj.toPackagingId)
       ..writeByte(4)
-      ..write(obj.locationId)
+      ..write(obj.fromLocationId)
       ..writeByte(5)
-      ..write(obj.quantity)
+      ..write(obj.toLocationId)
       ..writeByte(6)
-      ..write(obj.movementType)
+      ..write(obj.quantity)
       ..writeByte(7)
-      ..write(obj.notes)
+      ..write(obj.movementType)
       ..writeByte(8)
-      ..write(obj.createdAt)
+      ..write(obj.notes)
       ..writeByte(9)
-      ..write(obj.wine)
+      ..write(obj.createdAt)
       ..writeByte(10)
-      ..write(obj.fromPackaging)
+      ..write(obj.wine)
       ..writeByte(11)
-      ..write(obj.toPackaging)
+      ..write(obj.fromPackaging)
       ..writeByte(12)
-      ..write(obj.location);
+      ..write(obj.toPackaging)
+      ..writeByte(13)
+      ..write(obj.fromLocation)
+      ..writeByte(14)
+      ..write(obj.toLocation);
   }
 
   @override
@@ -86,7 +92,8 @@ StockMovementModel _$StockMovementModelFromJson(Map<String, dynamic> json) =>
       wineId: json['wine_id'] as String,
       fromPackagingId: json['from_packaging_id'] as String?,
       toPackagingId: json['to_packaging_id'] as String?,
-      locationId: json['location_id'] as String,
+      fromLocationId: json['from_location_id'] as String?,
+      toLocationId: json['to_location_id'] as String?,
       quantity: (json['quantity'] as num).toInt(),
       movementType:
           $enumDecode(_$StockMovementTypeEnumMap, json['movement_type']),
@@ -105,9 +112,13 @@ StockMovementModel _$StockMovementModelFromJson(Map<String, dynamic> json) =>
           ? null
           : PackagingModel.fromJson(
               json['to_packaging'] as Map<String, dynamic>),
-      location: json['location'] == null
+      fromLocation: json['from_location'] == null
           ? null
-          : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
+          : LocationModel.fromJson(
+              json['from_location'] as Map<String, dynamic>),
+      toLocation: json['to_location'] == null
+          ? null
+          : LocationModel.fromJson(json['to_location'] as Map<String, dynamic>),
     );
 
 const _$StockMovementTypeEnumMap = {
