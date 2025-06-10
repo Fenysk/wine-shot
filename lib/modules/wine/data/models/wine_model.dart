@@ -30,41 +30,36 @@ class WineModel extends WineEntity {
 
   @override
   @HiveField(3)
-  @JsonKey(name: 'volume')
-  final int? volume;
-
-  @override
-  @HiveField(4)
   @JsonKey(name: 'description')
   final String? description;
 
   @override
-  @HiveField(5)
+  @HiveField(4)
   @JsonKey(name: 'producer_id')
   final String? producerId;
 
   @override
-  @HiveField(6)
+  @HiveField(5)
   @JsonKey(name: 'region_id')
   final String? regionId;
 
   @override
-  @HiveField(7)
+  @HiveField(6)
   @JsonKey(name: 'wine_type_id')
   final String? wineTypeId;
 
   @override
-  @HiveField(8)
+  @HiveField(7)
   @JsonKey(name: 'producer')
   final ProducerModel? producer;
 
   @override
-  @HiveField(9)
+  @HiveField(8)
   @JsonKey(name: 'region')
   final RegionModel? region;
 
   @override
-  @HiveField(10)
+  @HiveField(9)
   @JsonKey(name: 'wine_type')
   final WineTypeModel? wineType;
 
@@ -72,7 +67,6 @@ class WineModel extends WineEntity {
     required this.id,
     required this.name,
     this.alcoholPercentage,
-    this.volume,
     this.description,
     this.producerId,
     this.regionId,
@@ -84,7 +78,6 @@ class WineModel extends WineEntity {
           id: id,
           name: name,
           alcoholPercentage: alcoholPercentage,
-          volume: volume,
           description: description,
           producerId: producerId,
           regionId: regionId,

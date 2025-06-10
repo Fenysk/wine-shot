@@ -310,9 +310,8 @@ static const Map<String,dynamic> _fr = {
   "layoutPage": {
     "home": "Accueil",
     "profile": "Profil",
-    "settings": "Paramètres",
-    "producers": "Producteurs",
-    "wines": "Vins",
+    "references": "Références",
+    "stock": "Stock",
     "logout": "Se Déconnecter",
     "changeLanguage": "Changer de Langue",
     "changeTheme": "Changer de Thème"
@@ -393,6 +392,22 @@ static const Map<String,dynamic> _fr = {
         "label": "Type de vin"
       }
     }
+  },
+  "referencesPage": {
+    "title": "Références"
+  },
+  "referencesTabView": {
+    "wines": "Vins",
+    "producers": "Producteurs",
+    "regions": "Régions"
+  },
+  "wineList": {
+    "showInList": "Afficher en liste",
+    "showInGrid": "Afficher en grille"
+  },
+  "producerList": {
+    "showInList": "Afficher en liste",
+    "showInGrid": "Afficher en grille"
   }
 };
 static const Map<String,dynamic> _zh = {

@@ -1,3 +1,4 @@
+import 'package:clean_starter/modules/wine/features/new_wine/widgets/alcohol_pourcentage_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../../_core/di.dart';
 import '../../../../../_shared/domain/entities/region_entity.dart';
-import '../../../../../_shared/widgets/custom_dialog.dart';
 import '../../../../../_shared/widgets/show_toast_notification.dart';
 import '../../../../producer/domain/entities/producer_entity.dart';
 import '../../../../producer/widgets/producer_dropdown_field.dart';
@@ -16,13 +16,14 @@ import '../../wine_list/bloc/wine-list/wine_list_bloc.dart';
 import '../../wine_list/bloc/wine-list/wine_list_event.dart';
 import '../../wine_list/widgets/wine_types_dropdown_field.dart';
 import '../bloc/new_wine_bloc.dart';
-import 'alcohol_pourcentage_field.dart';
+
 import 'description_field.dart';
-import 'volume_field.dart';
 import 'wine_name_field.dart';
 
 class NewWineDialog extends StatefulWidget {
-  const NewWineDialog({super.key});
+  final Widget Function(BuildContext context, Widget content, List<Widget> actions) builder;
+
+  const NewWineDialog({super.key, required this.builder});
 
   @override
   State<NewWineDialog> createState() => _NewWineDialogState();
@@ -32,7 +33,6 @@ class _NewWineDialogState extends State<NewWineDialog> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _nameController = TextEditingController();
   final _alcoholPercentageController = TextEditingController();
-  final _volumeController = TextEditingController();
   final _descriptionController = TextEditingController();
 
   RegionEntity? _selectedRegion;
@@ -43,7 +43,6 @@ class _NewWineDialogState extends State<NewWineDialog> {
   void dispose() {
     _nameController.dispose();
     _alcoholPercentageController.dispose();
-    _volumeController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -55,7 +54,7 @@ class _NewWineDialogState extends State<NewWineDialog> {
       final wineDto = NewWineDto(
         name: _nameController.text,
         alcoholPercentage: double.tryParse(_alcoholPercentageController.text),
-        volume: int.tryParse(_volumeController.text),
+        volume: null,
         description: _descriptionController.text,
         producerId: _selectedProducer?.id,
         regionId: _selectedRegion?.id,
@@ -82,60 +81,57 @@ class _NewWineDialogState extends State<NewWineDialog> {
       },
       child: BlocBuilder<NewWineBloc, NewWineState>(
         builder: (context, state) {
-          return CustomDialog(
-            title: context.tr('winesPage.newWineDialog.title'),
-            minWidth: 600,
-            maxWidth: 800,
-            content: FormBuilder(
-              key: _formKey,
-              child: Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 16,
-                    children: [
-                      WineNameField(controller: _nameController),
-                      AlcoholPercentageField(controller: _alcoholPercentageController),
-                      VolumeField(controller: _volumeController),
-                      DescriptionField(controller: _descriptionController),
-                      RegionDropdownField(
-                        selectedRegion: _selectedRegion,
-                        onChanged: _updateSelectRegion,
-                        required: false,
-                      ),
-                      ProducerDropdownField(
-                        selectedProducer: _selectedProducer,
-                        onChanged: _updateSelectProducer,
-                        required: false,
-                      ),
-                      WineTypesDropdownField(
-                        selectedWineType: _selectedWineType,
-                        onChanged: _updateSelectWineType,
-                        required: false,
-                      ),
-                    ],
-                  ),
+          final content = FormBuilder(
+            key: _formKey,
+            child: Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(right: 16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 16,
+                  children: [
+                    WineNameField(controller: _nameController),
+                    AlcoholPercentageField(controller: _alcoholPercentageController),
+                    DescriptionField(controller: _descriptionController),
+                    RegionDropdownField(
+                      selectedRegion: _selectedRegion,
+                      onChanged: _updateSelectRegion,
+                      required: false,
+                    ),
+                    ProducerDropdownField(
+                      selectedProducer: _selectedProducer,
+                      onChanged: _updateSelectProducer,
+                      required: false,
+                    ),
+                    WineTypesDropdownField(
+                      selectedWineType: _selectedWineType,
+                      onChanged: _updateSelectWineType,
+                      required: false,
+                    ),
+                  ],
                 ),
               ),
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(context.tr('common.cancel')),
-              ),
-              FilledButton(
-                onPressed: state.status == NewWineStatus.loading ? null : _submitForm,
-                child: state.status == NewWineStatus.loading
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Text(context.tr('common.save')),
-              ),
-            ],
           );
+
+          final actions = [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(context.tr('common.cancel')),
+            ),
+            FilledButton(
+              onPressed: state.status == NewWineStatus.loading ? null : _submitForm,
+              child: state.status == NewWineStatus.loading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Text(context.tr('common.save')),
+            ),
+          ];
+
+          return widget.builder(context, content, actions);
         },
       ),
     );

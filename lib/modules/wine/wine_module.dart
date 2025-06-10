@@ -13,7 +13,6 @@ import 'domain/usecases/get_wine_types_usecase.dart';
 import 'domain/usecases/get_wines_usecase.dart';
 import 'features/new_wine/bloc/new_wine_bloc.dart';
 import 'features/wine_list/bloc/wine-types-list/wine_types_list_bloc.dart';
-import 'wine_routes.dart';
 import 'features/wine_list/bloc/wine-list/wine_list_bloc.dart';
 
 final GetIt di = GetIt.instance;
@@ -38,13 +37,4 @@ Future<void> registerWineModule() async {
       ));
   di.registerFactory<WineTypesListBloc>(() => WineTypesListBloc(getWineTypesUseCase: di()));
   di.registerFactory<NewWineBloc>(() => NewWineBloc(createWineUsecase: di()));
-
-  // Register routes
-  di<List<RouteBase>>(instanceName: Constants.mainRoutesDiKey).addAll(wineRoutes);
-}
-
-void registerWineModuleWithContext(BuildContext context) {
-  // Add all wine module navigation tabs
-  var navTabs = di<List<AdaptiveDestination>>(instanceName: Constants.navTabsDiKey);
-  navTabs.addAll(getWineNavTabs(context));
 }

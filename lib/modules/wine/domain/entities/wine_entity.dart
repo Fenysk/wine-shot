@@ -7,7 +7,6 @@ class WineEntity extends Equatable {
   final String id;
   final String name;
   final double? alcoholPercentage;
-  final int? volume;
   final String? description;
   final String? producerId;
   final String? regionId;
@@ -20,7 +19,6 @@ class WineEntity extends Equatable {
     required this.id,
     required this.name,
     this.alcoholPercentage,
-    this.volume,
     this.description,
     this.producerId,
     this.regionId,
@@ -35,7 +33,6 @@ class WineEntity extends Equatable {
         id,
         name,
         alcoholPercentage,
-        volume,
         description,
         producerId,
         regionId,

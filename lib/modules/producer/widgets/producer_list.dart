@@ -1,13 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../../../_shared/widgets/custom_card.dart';
+import '../bloc/producer_bloc.dart';
 import '../domain/entities/producer_entity.dart';
 import '../features/new_producer/widgets/new_producer_button.dart';
-import '../bloc/producer_bloc.dart';
+import 'producer_tile.dart';
 
-class ProducerList extends StatelessWidget {
+enum ProducerTileDisplayType {
+  card,
+  tile
+}
+
+class ProducerList extends StatefulWidget {
   final List<ProducerEntity> producers;
   final Future<void> Function() onRefresh;
 
@@ -18,88 +24,80 @@ class ProducerList extends StatelessWidget {
   });
 
   @override
+  State<ProducerList> createState() => _ProducerListState();
+}
+
+class _ProducerListState extends State<ProducerList> {
+  ProducerTileDisplayType _displayType = ProducerTileDisplayType.card;
+
+  void _toggleDisplayType() {
+    setState(() {
+      _displayType = _displayType == ProducerTileDisplayType.card ? ProducerTileDisplayType.tile : ProducerTileDisplayType.card;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Stack(
       children: [
         RefreshIndicator(
-          onRefresh: onRefresh,
-          child: Column(
-            children: [
-              if (!isMobile)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: NewProducerButton(
-                        producerBloc: context.read<ProducerBloc>(),
+          onRefresh: widget.onRefresh,
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    spacing: 16,
+                    children: [
+                      TextButton.icon(
+                        icon: Icon(_displayType == ProducerTileDisplayType.card ? Icons.view_list : Icons.grid_view),
+                        label: Text(context.tr(_displayType == ProducerTileDisplayType.card ? 'producerList.showInList' : 'producerList.showInGrid')),
+                        onPressed: _toggleDisplayType,
                       ),
-                    ),
-                  ],
-                ),
-              Expanded(
-                child: CustomCard(
-                  child: ListView.builder(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: producers.length,
-                    itemBuilder: (context, index) {
-                      final producer = producers[index];
-                      if (producer.region == null) {
-                        return const SizedBox.shrink();
-                      }
-
-                      return ListTile(
-                        title: Text(
-                          producer.name,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                      if (!isMobile)
+                        NewProducerButton(
+                          producerBloc: context.read<ProducerBloc>(),
                         ),
-                        subtitle: Text(
-                          producer.region!.name,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => _showDeleteConfirmationDialog(context, producer.id),
-                        ),
-                      );
-                    },
+                    ],
                   ),
                 ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 64),
+                sliver: _displayType == ProducerTileDisplayType.card
+                    ? SliverGrid(
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 300,
+                          childAspectRatio: 3 / 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final producer = widget.producers[index];
+                            return ProducerTile(producer: producer, displayType: ProducerTileDisplayType.card);
+                          },
+                          childCount: widget.producers.length,
+                        ),
+                      )
+                    : SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final producer = widget.producers[index];
+                            return ProducerTile(producer: producer, displayType: ProducerTileDisplayType.tile);
+                          },
+                          childCount: widget.producers.length,
+                        ),
+                      ),
               ),
             ],
           ),
         ),
       ],
     );
-  }
-
-  Future<void> _showDeleteConfirmationDialog(BuildContext context, String producerId) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Supprimer le producteur'),
-        content: const Text('Êtes-vous sûr de vouloir supprimer ce producteur ?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Supprimer'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true) {
-      if (context.mounted) {
-        context.read<ProducerBloc>().add(DeleteProducerEvent(producerId));
-      }
-    }
   }
 }

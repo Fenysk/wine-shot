@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../../../_shared/domain/entities/region_entity.dart';
-import '../../../../../shared/widgets/custom_dropdown_field.dart';
+import '../../../../../_shared/widgets/custom_dropdown_field.dart';
 import '../bloc/region_bloc.dart';
 
 class RegionDropdownField extends StatelessWidget {

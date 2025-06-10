@@ -26,7 +26,7 @@ class _ProducersPageState extends State<ProducersPage> {
 
     return PageLayout(
       title: context.tr('producersPage.title'),
-      navTab: AuthNavTab.producers,
+      navTab: AuthNavTab.references,
       page: Align(
         alignment: Alignment.topCenter,
         child: MultiBlocProvider(

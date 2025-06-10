@@ -20,21 +20,20 @@ class WineModelAdapter extends TypeAdapter<WineModel> {
       id: fields[0] as String,
       name: fields[1] as String,
       alcoholPercentage: fields[2] as double?,
-      volume: fields[3] as int?,
-      description: fields[4] as String?,
-      producerId: fields[5] as String?,
-      regionId: fields[6] as String?,
-      wineTypeId: fields[7] as String?,
-      producer: fields[8] as ProducerModel?,
-      region: fields[9] as RegionModel?,
-      wineType: fields[10] as WineTypeModel?,
+      description: fields[3] as String?,
+      producerId: fields[4] as String?,
+      regionId: fields[5] as String?,
+      wineTypeId: fields[6] as String?,
+      producer: fields[7] as ProducerModel?,
+      region: fields[8] as RegionModel?,
+      wineType: fields[9] as WineTypeModel?,
     );
   }
 
   @override
   void write(BinaryWriter writer, WineModel obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -42,20 +41,18 @@ class WineModelAdapter extends TypeAdapter<WineModel> {
       ..writeByte(2)
       ..write(obj.alcoholPercentage)
       ..writeByte(3)
-      ..write(obj.volume)
-      ..writeByte(4)
       ..write(obj.description)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.producerId)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.regionId)
-      ..writeByte(7)
+      ..writeByte(6)
       ..write(obj.wineTypeId)
-      ..writeByte(8)
+      ..writeByte(7)
       ..write(obj.producer)
-      ..writeByte(9)
+      ..writeByte(8)
       ..write(obj.region)
-      ..writeByte(10)
+      ..writeByte(9)
       ..write(obj.wineType);
   }
 
@@ -78,7 +75,6 @@ WineModel _$WineModelFromJson(Map<String, dynamic> json) => WineModel(
       id: json['id'] as String,
       name: json['name'] as String,
       alcoholPercentage: (json['alcohol_percentage'] as num?)?.toDouble(),
-      volume: (json['volume'] as num?)?.toInt(),
       description: json['description'] as String?,
       producerId: json['producer_id'] as String?,
       regionId: json['region_id'] as String?,

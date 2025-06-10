@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import '../../../../../shared/widgets/custom_dropdown_field.dart';
+import '../../../../../_shared/widgets/custom_dropdown_field.dart';
 import '../../../domain/entities/wine_type_entity.dart';
 import '../bloc/wine-types-list/wine_types_list_bloc.dart';
 

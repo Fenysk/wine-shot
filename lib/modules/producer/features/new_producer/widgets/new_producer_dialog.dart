@@ -4,17 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../../_shared/domain/entities/region_entity.dart';
-import '../../../../../_shared/widgets/custom_dialog.dart';
 import '../../../../../_shared/widgets/show_toast_notification.dart';
 import '../../../bloc/producer_bloc.dart';
 import '../../../data/dto/new_producer_dto.dart';
 import '../bloc/new_producer_bloc.dart';
-
 import '../../../../region/features/region_list/widgets/region_dropdown_field.dart';
 import 'producer_name_field.dart';
 
 class NewProducerDialog extends StatefulWidget {
-  const NewProducerDialog({super.key});
+  final Widget Function(BuildContext context, Widget content, List<Widget> actions) builder;
+
+  const NewProducerDialog({super.key, required this.builder});
 
   @override
   State<NewProducerDialog> createState() => _NewProducerDialogState();
@@ -61,39 +61,44 @@ class _NewProducerDialogState extends State<NewProducerDialog> {
       },
       child: BlocBuilder<NewProducerBloc, NewProducerState>(
         builder: (context, state) {
-          return CustomDialog(
-            title: context.tr('producersPage.newProducerDialog.title'),
-            content: FormBuilder(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ProducerNameField(controller: _nameController),
-                  const SizedBox(height: 16),
-                  RegionDropdownField(
-                    selectedRegion: _selectedRegion,
-                    onChanged: _updateSelectRegion,
-                  ),
-                ],
+          final content = FormBuilder(
+            key: _formKey,
+            child: Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(right: 16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 16,
+                  children: [
+                    ProducerNameField(controller: _nameController),
+                    RegionDropdownField(
+                      selectedRegion: _selectedRegion,
+                      onChanged: _updateSelectRegion,
+                    ),
+                  ],
+                ),
               ),
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(context.tr('common.cancel')),
-              ),
-              FilledButton(
-                onPressed: state.status == NewProducerStatus.loading ? null : _submitForm,
-                child: state.status == NewProducerStatus.loading
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Text(context.tr('common.save')),
-              ),
-            ],
           );
+
+          final actions = [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(context.tr('common.cancel')),
+            ),
+            FilledButton(
+              onPressed: state.status == NewProducerStatus.loading ? null : _submitForm,
+              child: state.status == NewProducerStatus.loading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Text(context.tr('common.save')),
+            ),
+          ];
+
+          return widget.builder(context, content, actions);
         },
       ),
     );
