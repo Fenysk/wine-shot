@@ -4,6 +4,7 @@ import '../_shared/shared_module.dart';
 import '../modules/auth/auth_module.dart';
 import '../modules/region/region_module.dart';
 import '../modules/producer/producer_module.dart';
+import '../modules/stocks/stocks_module.dart';
 import '../modules/wine/wine_module.dart';
 import '../modules/references/references_module.dart';
 import 'constants.dart';
@@ -19,6 +20,7 @@ class AppModules {
     await registerProducerModule();
     await registerWineModule();
     await registerReferencesModule();
+    await registerStocksModule();
   }
 
   /// Initializes modules after the Flutter app has started (after `runApp()`), when BuildContext is available.

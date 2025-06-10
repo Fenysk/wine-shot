@@ -311,7 +311,7 @@ static const Map<String,dynamic> _fr = {
     "home": "Accueil",
     "profile": "Profil",
     "references": "Références",
-    "stock": "Stock",
+    "stocks": "Stocks",
     "logout": "Se Déconnecter",
     "changeLanguage": "Changer de Langue",
     "changeTheme": "Changer de Thème"
@@ -395,6 +395,15 @@ static const Map<String,dynamic> _fr = {
   },
   "referencesPage": {
     "title": "Références"
+  },
+  "stocksPage": {
+    "title": "Stocks"
+  },
+  "stocksTabView": {
+    "inventory": "Inventaire",
+    "movements": "Mouvements",
+    "inventoryContent": "Contenu de l'inventaire",
+    "movementsContent": "Contenu des mouvements"
   },
   "referencesTabView": {
     "wines": "Vins",
